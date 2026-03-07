@@ -330,10 +330,13 @@
       <div class="champ">
         <label>Rappels / Avertissements</label>
         <select id="rappels">
-          <option value="aucun">Aucun</option>
-          <option value="rappel">Rappel(s) amical(aux)</option>
-          <option value="avertissement">Avertissement(s)</option>
-        </select>
+  <option value="aucun">Aucun</option>
+  <option value="rappel_officiel">Rappel Officiel</option>
+  <option value="avert1">Avertissement Niveau 1</option>
+  <option value="avert2">Avertissement Niveau 2</option>
+  <option value="avert3">Avertissement Niveau 3</option>
+  <option value="avert4">Avertissement Niveau 4</option>
+</select>
       </div>
     </div>
 
@@ -401,7 +404,9 @@
     </div>
 
     <button onclick="genererAvis()">📄 Générer l'avis</button>
+    <button onclick="resetFormulaire()" style="background-color:#30363d; margin-top:10px;">🔄 Réinitialiser</button>
   </div>
+  
 
   <div id="resultat" class="formulaire-cache"></div>
 
