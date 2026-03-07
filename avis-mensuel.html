@@ -1,0 +1,409 @@
+<link rel="stylesheet" href="style.css" />
+
+<div class="container">
+  <a href="index.html" class="btn-retour">← Retour</a>
+</div>
+
+  <header>
+    <h1>🚒 Flash MPP</h1>
+    <p>Générateur d'avis mensuel — MonPompier.com</p>
+  </header>
+
+  <div class="formulaire-visible">
+    <h2>📋 Avis Mensuel</h2>
+
+    <!-- IDENTITÉ -->
+    <div class="section">
+      <h3>👤 Identité</h3>
+      <div class="champ">
+        <label>Grade</label>
+        <select id="grade">
+          <option value="Sapeur">Sapeur</option>
+          <option value="Caporal">Caporal</option>
+          <option value="Caporal-Chef">Caporal-Chef</option>
+          <option value="Sergent">Sergent</option>
+          <option value="Sergent-Chef">Sergent-Chef</option>
+          <option value="Adjudant">Adjudant</option>
+          <option value="Adjudant-Chef">Adjudant-Chef</option>
+          <option value="Lieutenant">Lieutenant</option>
+          <option value="Capitaine">Capitaine</option>
+          <option value="Commandant">Commandant</option>
+          <option value="Lieutenant-Colonel">Lieutenant-Colonel</option>
+          <option value="Colonel">Colonel</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Pseudo du joueur</label>
+        <input type="text" id="nom" placeholder="Pseudo" />
+      </div>
+      <div class="champ">
+        <label>Ce joueur a-t-il un poste ?</label>
+        <select id="aPoste" onchange="afficherPoste()">
+          <option value="non">Non — Agent simple</option>
+          <option value="oui">Oui — Il occupe un poste</option>
+        </select>
+      </div>
+
+      <div id="blocPoste" class="formulaire-cache">
+        <div class="champ">
+          <label>Poste occupé</label>
+          <select id="poste" onchange="afficherChampPoste()">
+            <optgroup label="--- Caserne ---">
+              <option value="responsable_materiel">Responsable Matériel</option>
+              <option value="responsable_pharmacie">Responsable Pharmacie</option>
+              <option value="responsable_habillement">Responsable Habillement</option>
+              <option value="responsable_vehicule">Responsable Véhicules</option>
+              <option value="chef_section">Chef de Section</option>
+              <option value="responsable_formation_caserne">Responsable Formation Caserne</option>
+              <option value="chef_centre_adjoint">Chef de Centre Adjoint</option>
+              <option value="chef_centre">Chef de Centre</option>
+            </optgroup>
+            <optgroup label="--- Groupement ---">
+              <option value="chef_groupement">Chef de Groupement</option>
+              <option value="chef_groupement_adjoint">Chef de Groupement Adjoint</option>
+              <option value="responsable_formation">Responsable Formation</option>
+              <option value="responsable_formation_adjoint">Responsable Formation Adjoint</option>
+              <option value="responsable_operations">Responsable Opérations-Prévisions</option>
+              <option value="responsable_operations_adjoint">Responsable Opérations-Prévisions Adjoint</option>
+              <option value="responsable_rh">Responsable des Ressources Humaines</option>
+              <option value="responsable_rh_adjoint">Responsable RH Adjoint</option>
+              <option value="responsable_technique">Responsable Technique</option>
+              <option value="responsable_technique_adjoint">Responsable Technique Adjoint</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="section">
+          <h3>🏛️ Gestion du poste</h3>
+
+          <div id="bloc_tenue_poste" class="champ cache">
+            <label>Tenue du poste</label>
+            <select id="tenue_poste">
+              <option value="parfait">Parfaitement tenu et en autonomie</option>
+              <option value="bien">Bien tenu</option>
+              <option value="moyen">Tenu de manière passable</option>
+              <option value="insuffisant">Insuffisamment tenu</option>
+            </select>
+          </div>
+
+          <div id="bloc_indispo_vehicule" class="champ cache">
+            <label>Indisponibilité véhicule ce mois</label>
+            <select id="indispo_vehicule">
+              <option value="aucune">Aucune indisponibilité</option>
+              <option value="oui_geree">Indisponibilité gérée correctement</option>
+              <option value="oui_mal_geree">Indisponibilité mal gérée</option>
+            </select>
+          </div>
+
+          <div id="bloc_desinfection" class="champ cache">
+            <label>Désinfection VSAV</label>
+            <select id="desinfection">
+              <option value="correcte">Effectuée correctement</option>
+              <option value="partielle">Partiellement effectuée</option>
+              <option value="non_effectuee">Non effectuée</option>
+            </select>
+          </div>
+
+          <div id="bloc_controle_vestiaires" class="champ cache">
+            <label>Contrôle des vestiaires</label>
+            <select id="controle_vestiaires">
+              <option value="regulier">Effectué régulièrement</option>
+              <option value="irregulier">Irrégulier</option>
+              <option value="absent">Non effectué</option>
+            </select>
+          </div>
+
+          <div id="bloc_budget" class="champ cache">
+            <label>Gestion du budget</label>
+            <select id="budget">
+              <option value="bien">Budget bien tenu, demandes effectuées dans les délais</option>
+              <option value="moyen">Budget moyennement géré</option>
+              <option value="mauvais">Budget mal géré</option>
+            </select>
+          </div>
+
+          <div id="bloc_crss" class="champ cache">
+            <label>Gestion des CRSS</label>
+            <select id="crss">
+              <option value="bien">CRSS traités correctement</option>
+              <option value="moyen">CRSS partiellement traités</option>
+              <option value="mauvais">CRSS non traités</option>
+            </select>
+          </div>
+
+          <div id="bloc_avis_section" class="champ cache">
+            <label>Rédaction des avis</label>
+            <select id="avis_section">
+              <option value="bien">Avis bien rédigés et posés dans les dossiers</option>
+              <option value="moyen">Avis partiellement rédigés</option>
+              <option value="mauvais">Avis non rédigés</option>
+            </select>
+          </div>
+
+          <div id="bloc_promotions_section" class="champ cache">
+            <label>Rédaction des promotions</label>
+            <select id="promotions_section">
+              <option value="bien">Promotions bien rédigées et dans les délais</option>
+              <option value="moyen">Promotions partiellement rédigées</option>
+              <option value="mauvais">Promotions non rédigées</option>
+            </select>
+          </div>
+
+          <div id="bloc_plannings_section" class="champ cache">
+            <label>Plannings de section</label>
+            <select id="plannings_section">
+              <option value="bien">Plannings bien réalisés et libérés dans les temps</option>
+              <option value="moyen">Plannings partiellement réalisés</option>
+              <option value="mauvais">Plannings non réalisés</option>
+            </select>
+          </div>
+
+          <div id="bloc_traitement_formations" class="champ cache">
+            <label>Traitement des formations</label>
+            <select id="traitement_formations">
+              <option value="bien">Candidatures traitées correctement et dans les délais</option>
+              <option value="moyen">Candidatures partiellement traitées</option>
+              <option value="mauvais">Candidatures non traitées</option>
+            </select>
+          </div>
+
+          <div id="bloc_transmission_formations" class="champ cache">
+            <label>Transmission des formations à la caserne</label>
+            <select id="transmission_formations">
+              <option value="bien">Transmissions effectuées correctement</option>
+              <option value="moyen">Transmissions partielles</option>
+              <option value="mauvais">Transmissions non effectuées</option>
+            </select>
+          </div>
+
+          <div id="bloc_surveillance_subordonnes" class="champ cache">
+            <label>Surveillance des subordonnés</label>
+            <select id="surveillance_subordonnes">
+              <option value="bien">Surveillance bonne et régulière</option>
+              <option value="moyen">Surveillance passable</option>
+              <option value="mauvais">Surveillance insuffisante</option>
+            </select>
+          </div>
+
+          <div id="bloc_promotions_exclusions" class="champ cache">
+            <label>Promotions et demandes d'exclusion</label>
+            <select id="promotions_exclusions">
+              <option value="bien">Traitées dans les délais</option>
+              <option value="moyen">Partiellement traitées</option>
+              <option value="mauvais">Non traitées</option>
+            </select>
+          </div>
+
+          <div id="bloc_avis_responsables" class="champ cache">
+            <label>Avis des responsables</label>
+            <select id="avis_responsables">
+              <option value="bien">Fournis dans les délais</option>
+              <option value="moyen">Partiellement fournis</option>
+              <option value="mauvais">Non fournis</option>
+            </select>
+          </div>
+
+          <div id="bloc_equilibrage_sections" class="champ cache">
+            <label>Équilibrage des sections</label>
+            <select id="equilibrage_sections">
+              <option value="bien">Équilibrage bon</option>
+              <option value="moyen">Équilibrage passable</option>
+              <option value="mauvais">Équilibrage insuffisant</option>
+            </select>
+          </div>
+
+          <div id="bloc_repartition_taches" class="champ cache">
+            <label>Répartition des tâches avec l'adjoint / le chef</label>
+            <select id="repartition_taches">
+              <option value="equilibree">Équilibrée</option>
+              <option value="desavantage_lui">Déséquilibrée — désavantage pour lui</option>
+              <option value="desavantage_autre">Déséquilibrée — désavantage pour l'autre</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- STATISTIQUES -->
+    <div class="section">
+      <h3>📊 Statistiques</h3>
+      <div class="champ">
+        <label>Ensemble du mois</label>
+        <select id="ensemble">
+          <option value="excellent">Très bon mois</option>
+          <option value="bon">Bon mois</option>
+          <option value="passable">Mois passable</option>
+          <option value="mauvais">Mauvais mois</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>PA — Points d'Action (%)</label>
+        <input type="number" id="pa" min="0" max="100" value="100" />
+      </div>
+      <div class="champ">
+        <label>CP — Condition Physique (%)</label>
+        <input type="number" id="cp" min="0" max="100" value="100" />
+      </div>
+      <div class="champ">
+        <label>Humeur (%)</label>
+        <input type="number" id="humeur" min="0" max="100" value="100" />
+      </div>
+    </div>
+
+    <!-- COMPORTEMENT -->
+    <div class="section">
+      <h3>🧠 Comportement & Présence</h3>
+      <div class="champ">
+        <label>Présence</label>
+        <select id="presence">
+          <option value="quotidienne">Présence quotidienne</option>
+          <option value="reguliere">Présence régulière</option>
+          <option value="irreguliere">Présence irrégulière</option>
+          <option value="insuffisante">Présence insuffisante</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Communication</label>
+        <select id="communication">
+          <option value="excellente">Excellente</option>
+          <option value="tres_bonne">Très bonne</option>
+          <option value="bonne">Bonne</option>
+          <option value="passable">Passable</option>
+          <option value="mauvaise">Mauvaise</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Comportement</label>
+        <select id="comportement">
+          <option value="exemplaire">Exemplaire</option>
+          <option value="tres_bon">Très bon</option>
+          <option value="bon">Bon</option>
+          <option value="passable">Passable</option>
+          <option value="mauvais">Mauvais</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Investissement</label>
+        <select id="investissement">
+          <option value="excellent">Excellent</option>
+          <option value="tres_bon">Très bon</option>
+          <option value="bon">Bon</option>
+          <option value="passable">Passable</option>
+          <option value="mauvais">Mauvais</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- OBLIGATIONS -->
+    <div class="section">
+      <h3>📋 Obligations</h3>
+      <div class="champ">
+        <label>Planning débloqué</label>
+        <select id="planning">
+          <option value="oui">Oui, dans les temps</option>
+          <option value="non">Non / En retard</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>EPI (entretien + demande)</label>
+        <select id="epi">
+          <option value="correct">Correct</option>
+          <option value="incorrect">Incorrect</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>FMA</label>
+        <select id="fma">
+          <option value="ajour">À jour</option>
+          <option value="noajour">Non à jour</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Bagage formatif</label>
+        <select id="formation">
+          <option value="excellent">Excellent</option>
+          <option value="atteint">Atteint pour son grade</option>
+          <option value="insuffisant">Insuffisant</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Rappels / Avertissements</label>
+        <select id="rappels">
+          <option value="aucun">Aucun</option>
+          <option value="rappel">Rappel(s) amical(aux)</option>
+          <option value="avertissement">Avertissement(s)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- SIGNATURE -->
+<div class="section">
+  <h3>✍️ Signature</h3>
+  <div class="champ">
+    <label>Ton grade</label>
+    <select id="sig_grade">
+      <option value="Sergent-Chef">Sergent-Chef</option>
+      <option value="Adjudant">Adjudant</option>
+      <option value="Adjudant-Chef">Adjudant-Chef</option>
+      <option value="Lieutenant">Lieutenant</option>
+      <option value="Capitaine">Capitaine</option>
+      <option value="Commandant">Commandant</option>
+      <option value="Lieutenant-Colonel">Lieutenant-Colonel</option>
+      <option value="Colonel">Colonel</option>
+    </select>
+  </div>
+  <div class="champ">
+    <label>Ton pseudo</label>
+    <input type="text" id="sig_pseudo" placeholder="Ex: Quentin13" />
+  </div>
+  <div class="champ">
+    <label>Ta fonction</label>
+    <select id="sig_fonction">
+      <option value="Chef de Section">Chef de Section</option>
+      <option value="Chef de Centre Adjoint">Chef de Centre Adjoint</option>
+      <option value="Chef de Centre">Chef de Centre</option>
+      <option value="Responsable Ressources Humaines">Responsable Ressources Humaines</option>
+      <option value="Responsable Ressources Humaines Adjoint">Responsable Ressources Humaines Adjoint</option>
+      <option value="Chef de Groupement">Chef de Groupement</option>
+      <option value="Chef de Groupement Adjoint">Chef de Groupement Adjoint</option>
+    </select>
+  </div>
+  <div class="champ">
+  <label>Caserne / Groupement</label>
+  <select id="sig_caserne">
+    <optgroup label="--- SDIS 13 — Bouches-du-Rhône ---">
+      <option value="CIS Alpilles-Durance|13">CIS Alpilles-Durance</option>
+      <option value="CIS Chateaurenard|13">CIS Chateaurenard</option>
+      <option value="CIS Eyguières|13">CIS Eyguières</option>
+      <option value="CIS Istres|13">CIS Istres</option>
+      <option value="CIS Lambesc|13">CIS Lambesc</option>
+      <option value="CIS Mallemort|13">CIS Mallemort</option>
+      <option value="CIS Salon-de-Provence|13">CIS Salon-de-Provence</option>
+      <option value="CIS Vallée des Baux|13">CIS Vallée des Baux</option>
+      <option value="Groupement Centre|13">Groupement Centre</option>
+      <option value="Groupement Nord|13">Groupement Nord</option>
+    </optgroup>
+    <optgroup label="--- SDIS 67 — Bas-Rhin ---">
+      <option value="CIS Bischwiller|67">CIS Bischwiller</option>
+      <option value="CIS Molsheim|67">CIS Molsheim</option>
+      <option value="CIS Petersbach|67">CIS Petersbach</option>
+      <option value="CIS Saverne|67">CIS Saverne</option>
+      <option value="CIS Strasbourg Ouest|67">CIS Strasbourg Ouest</option>
+      <option value="CIS Truchtersheim|67">CIS Truchtersheim</option>
+      <option value="CIS Val de Moder|67">CIS Val de Moder</option>
+      <option value="CIS Wasselonne|67">CIS Wasselonne</option>
+      <option value="Groupement Nord|67">Groupement Nord</option>
+      <option value="Groupement Sud|67">Groupement Sud</option>
+    </optgroup>
+  </select>
+</div>
+
+    <button onclick="genererAvis()">📄 Générer l'avis</button>
+  </div>
+
+  <div id="resultat" class="formulaire-cache"></div>
+
+</div>
+
+<script src="script.js"></script>
