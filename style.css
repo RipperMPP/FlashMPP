@@ -3,13 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   background-color: #0d1117;
   color: white;
   font-family: Arial, sans-serif;
 }
-
 .container {
   max-width: 750px;
   margin: 0 auto;
@@ -18,29 +16,24 @@ body {
 .container.large {
   max-width: 900px;
 }
-
 header {
   text-align: center;
   margin-bottom: 50px;
 }
-
 header h1 {
   font-size: 42px;
   color: #e63946;
   margin-bottom: 10px;
 }
-
 header p {
   color: #8b949e;
   font-size: 16px;
 }
-
 /* PAGE D'ACCUEIL */
 .modules {
   display: flex;
   gap: 20px;
 }
-
 .card {
   background-color: #161b22;
   border: 1px solid #30363d;
@@ -49,34 +42,28 @@ header p {
   flex: 1;
   text-align: center;
 }
-
 .card:hover {
   border-color: #e63946;
   transform: translateY(-5px);
   transition: all 0.3s ease;
 }
-
 .icon {
   font-size: 40px;
   margin-bottom: 15px;
 }
-
 .card h2 {
   font-size: 18px;
   margin-bottom: 10px;
   color: #e6edf3;
 }
-
 .card p {
   color: #8b949e;
   font-size: 14px;
   margin-bottom: 20px;
 }
-
 .card a {
   text-decoration: none;
 }
-
 .btn-disabled {
   background-color: #30363d;
   color: #8b949e;
@@ -87,7 +74,6 @@ header p {
   border: none;
   font-size: 15px;
 }
-
 /* FORMULAIRES */
 .formulaire-visible {
   background-color: #161b22;
@@ -95,19 +81,15 @@ header p {
   border-radius: 12px;
   padding: 30px;
 }
-
 .formulaire-cache {
   display: none;
 }
-
 .cache {
   display: none;
 }
-
 .section {
   margin-bottom: 28px;
 }
-
 .section h3 {
   color: #e63946;
   font-size: 15px;
@@ -115,19 +97,16 @@ header p {
   padding-bottom: 8px;
   border-bottom: 1px solid #30363d;
 }
-
 .champ {
   display: flex;
   flex-direction: column;
   margin-bottom: 14px;
 }
-
 .champ label {
   color: #8b949e;
   font-size: 13px;
   margin-bottom: 6px;
 }
-
 .champ input,
 .champ select,
 .champ textarea {
@@ -138,12 +117,10 @@ header p {
   color: white;
   font-size: 14px;
 }
-
 .champ textarea {
   height: 100px;
   resize: vertical;
 }
-
 button {
   background-color: #e63946;
   color: white;
@@ -155,12 +132,10 @@ button {
   width: 100%;
   margin-top: 10px;
 }
-
 button:hover {
   background-color: #c1121f;
   transition: all 0.2s ease;
 }
-
 #resultat {
   margin-top: 30px;
   background-color: #161b22;
@@ -168,12 +143,10 @@ button:hover {
   border-radius: 12px;
   padding: 30px;
 }
-
 #resultat h2 {
   color: #e63946;
   margin-bottom: 20px;
 }
-
 .texte-genere {
   background-color: #0d1117;
   border: 1px solid #30363d;
@@ -184,16 +157,13 @@ button:hover {
   color: #e6edf3;
   white-space: pre-wrap;
 }
-
 .btn-copier {
   margin-top: 16px;
   background-color: #238636;
 }
-
 .btn-copier:hover {
   background-color: #2ea043;
 }
-
 /* BOUTON RETOUR */
 .btn-retour {
   display: inline-block;
@@ -202,11 +172,9 @@ button:hover {
   margin-bottom: 20px;
   font-size: 14px;
 }
-
 .btn-retour:hover {
   color: #e63946;
 }
-
 .btn-retour:hover {
   color: #e63946;
 }
