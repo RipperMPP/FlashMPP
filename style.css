@@ -189,18 +189,10 @@ button:hover {
 }
 .btn-retour {
   display: inline-block;
-  background-color: #30363d;
-  color: white;
+  color: #8b949e;
   text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 14px;
   margin-bottom: 20px;
-  transition: background-color 0.2s;
-}
-
-.btn-retour:hover {
-  background-color: #e63946;
+  font-size: 14px;
 }
 
 .btn-retour:hover {
@@ -211,15 +203,4 @@ button:hover {
   color: #30363d;
   font-size: 11px;
   margin-top: 40px;
-
-}
-.compteur {
-  text-align: center;
-  margin-top: 30px;
-  color: #8b949e;
-  font-size: 13px;
-}
-
-.compteur strong {
-  color: #e63946;
 }

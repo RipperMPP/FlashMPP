@@ -59,7 +59,6 @@ function genererSanction() {
   if (!dest_pseudo || !sig_pseudo || !date_sanction) {
     alert("⚠️ Merci de remplir le pseudo destinataire, émetteur et la date.");
     return;
-    incrementerCompteur();
   }
 
   // Formatage date
@@ -94,7 +93,6 @@ function genererSanction() {
     vehicule:     "indisponibilité d'un véhicule suite à une mauvaise gestion de votre poste",
     comportement: "comportement inapproprié au sein du CIS",
     statistiques: "statistiques inférieures à 10%",
-    epi: "attribution d'EPI sans demande de renouvellement préalable",
   };
 
   const motifsCorps = {
@@ -105,7 +103,6 @@ function genererSanction() {
     vehicule:     "En effet, un véhicule est passé indisponible suite à une mauvaise gestion de votre poste, impactant la capacité opérationnelle du centre.",
     comportement: "En effet, votre comportement au sein du CIS n'est pas en adéquation avec les règles en vigueur et les valeurs attendues de tout agent.",
     statistiques: "En effet, vos statistiques sont inférieures à 10% ce mois-ci, ce qui est en dessous du seuil minimum requis par les NDS en vigueur.",
-  epi: "En effet, vous avez obtenu des EPI sans avoir effectué de demande de renouvellement, contrairement à la procédure en vigueur.",
   };
 
   // Destinataire
@@ -215,13 +212,4 @@ function resetSanction() {
     </div>`;
   nbCopies = 1;
   window.scrollTo({ top: 0, behavior: "smooth" });
-}
-function incrementerCompteur() {
-  const url = "https://flashmpp-default-rtdb.europe-west1.firebasedatabase.app/compteur/avis.json";
-  fetch(url).then(r => r.json()).then(val => {
-    fetch(url, {
-      method: "PUT",
-      body: JSON.stringify((val || 0) + 1)
-    });
-  });
 }
