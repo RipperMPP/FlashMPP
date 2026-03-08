@@ -40,17 +40,17 @@ function afficherPoste() {
 }
 
 function genererPromotion() {
-  const grade    = document.getElementById("grade").value;
-  const nom      = document.getElementById("nom").value;
-  const aPoste   = document.getElementById("aPoste").value;
-  const pa       = document.getElementById("pa").value;
-  const cp       = document.getElementById("cp").value;
-  const humeur   = document.getElementById("humeur").value;
-  const presence = document.getElementById("presence").value;
-  const epi      = document.getElementById("epi").value;
-  const fma      = document.getElementById("fma").value;
-  const planning = document.getElementById("planning").value;
-  const avis     = document.getElementById("avis").value;
+  const grade       = document.getElementById("grade").value;
+  const nom         = document.getElementById("nom").value;
+  const aPoste      = document.getElementById("aPoste").value;
+  const pa          = document.getElementById("pa").value;
+  const cp          = document.getElementById("cp").value;
+  const humeur      = document.getElementById("humeur").value;
+  const presence    = document.getElementById("presence").value;
+  const epi         = document.getElementById("epi").value;
+  const fma         = document.getElementById("fma").value;
+  const planning    = document.getElementById("planning").value;
+  const avis        = document.getElementById("avis").value;
   const sig_grade   = document.getElementById("sig_grade").value;
   const sig_pseudo  = document.getElementById("sig_pseudo").value;
   const sig_fonction= document.getElementById("sig_fonction").value;
@@ -61,28 +61,25 @@ function genererPromotion() {
   if (!nom) {
     alert("⚠️ Merci de remplir le pseudo du joueur.");
     return;
-    incrementerCompteur();
   }
 
   // Date
   const maintenant = new Date();
-  const jour    = String(maintenant.getDate()).padStart(2, "0");
-  const moisNum = String(maintenant.getMonth() + 1).padStart(2, "0");
-  const annee   = maintenant.getFullYear();
+  const jour       = String(maintenant.getDate()).padStart(2, "0");
+  const moisNum    = String(maintenant.getMonth() + 1).padStart(2, "0");
+  const annee      = maintenant.getFullYear();
   const dateComplete = `${jour}/${moisNum}/${annee}`;
 
-  // Article
-  const articleDe = (grade.startsWith("A") || grade.startsWith("O")) ? "de l'" : "du ";
-const gradeSuperieur = gradesMap[grade] || "grade supérieur";
-const articleSup = (gradeSuperieur.startsWith("A") || gradeSuperieur.startsWith("O")) ? "d'" : "de ";
-const articlePres = (grade.startsWith("A") || grade.startsWith("O")) ? "L'" : "Le ";
+  // Articles
+  const articleDe  = (grade.startsWith("A") || grade.startsWith("O")) ? "de l'" : "du ";
+  const gradeSuperieur = gradesMap[grade] || "grade supérieur";
+  const articleSup = (gradeSuperieur.startsWith("A") || gradeSuperieur.startsWith("O")) ? "d'" : "de ";
 
-const decision = avis === "favorable"
-  ? `Avis Favorable à la demande de promotion ${articleDe}${grade} ${nom} au grade ${articleSup}${gradeSuperieur}.`
-  : `Avis Défavorable à la demande de promotion ${articleDe}${grade} ${nom} au grade ${articleSup}${gradeSuperieur}.`;
+  const decision = avis === "favorable"
+    ? `Avis Favorable à la demande de promotion ${articleDe}${grade} ${nom} au grade ${articleSup}${gradeSuperieur}.`
+    : `Avis Défavorable à la demande de promotion ${articleDe}${grade} ${nom} au grade ${articleSup}${gradeSuperieur}.`;
 
   // Présence
- const article = articlePres;
   const presenceTexte = {
     quotidienne: "La connexion est quotidienne.",
     reguliere:   "La connexion est régulière.",
@@ -112,8 +109,8 @@ const decision = avis === "favorable"
   // Poste
   let posteTexte = "";
   if (aPoste === "oui") {
-    const poste = document.getElementById("poste").value;
-    const tenue = document.getElementById("tenue_poste").value;
+    const poste    = document.getElementById("poste").value;
+    const tenue    = document.getElementById("tenue_poste").value;
     const nomPoste = postesNoms[poste] || poste;
     const tenueTexte = {
       parfait:     "parfaitement tenu et en autonomie, les tâches demandées sont réalisées dans les délais",
@@ -146,6 +143,8 @@ const decision = avis === "favorable"
     <button class="btn-copier" onclick="copierTexte()">📋 Copier le texte</button>
   `;
   resultat.scrollIntoView({ behavior: "smooth" });
+
+  incrementerCompteur();
 }
 
 function copierTexte() {
@@ -171,6 +170,7 @@ function resetPromotion() {
   document.getElementById("resultat").className = "formulaire-cache";
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
 function incrementerCompteur() {
   const url = "https://flashmpp-default-rtdb.europe-west1.firebasedatabase.app/compteur/avis.json";
   fetch(url).then(r => r.json()).then(val => {

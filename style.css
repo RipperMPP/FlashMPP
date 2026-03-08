@@ -6,7 +6,7 @@
 
 body {
   background-color: #0d1117;
-  color: red;
+  color: white;
   font-family: Arial, sans-serif;
 }
 
@@ -136,6 +136,7 @@ button:hover {
 .btn-copier:hover {
   background-color: #2ea043;
 }
+
 .modules {
   display: flex;
   gap: 20px;
@@ -187,6 +188,7 @@ button:hover {
   border: none;
   font-size: 15px;
 }
+
 .btn-retour {
   display: inline-block;
   background-color: #30363d;
@@ -201,20 +203,16 @@ button:hover {
 
 .btn-retour:hover {
   background-color: #e63946;
+  color: white;
 }
 
-.btn-retour:hover {
-  color: #e63946;
-}
 .signature-auteur {
   text-align: right;
   color: #30363d;
   font-size: 11px;
   margin-top: 40px;
-
-<<<<<<< HEAD
-=======
 }
+
 .compteur {
   text-align: center;
   margin-top: 30px;
@@ -224,5 +222,4 @@ button:hover {
 
 .compteur strong {
   color: #e63946;
->>>>>>> 7eb5b949500fe1b024522e2abbca836a43aac3e9
 }
