@@ -80,7 +80,7 @@ const sig_sdis = caserneBrute.split("|")[1];
   const moisNum    = String(maintenant.getMonth() + 1).padStart(2, "0");
   const dateComplete = `${jour}/${moisNum}/${annee}`;
   const entete     = `[Avis ${moisTexte} ${annee}]`;
-  const signature  = `- Le ${dateComplete} - ${sig_grade} ${sig_pseudo}, ${sig_fonction}, CIS ${sig_caserne}, SDIS ${sig_sdis}`;
+  const signature = `- Le ${dateComplete} - ${sig_grade} ${sig_pseudo}, ${sig_fonction}, ${sig_caserne}, SDIS ${sig_sdis}`;
 
   // Présence
   const presenceTexte = {
@@ -135,14 +135,14 @@ const sig_sdis = caserneBrute.split("|")[1];
   }[formation];
 
   // Rappels
- const rappelsTexte = {
-  aucun:         "Pas de rappel ni avertissement ce mois-ci.",
-  rappel_officiel: "Un rappel officiel a été émis ce mois-ci.",
-  avert1:        "Un avertissement de niveau 1 a été émis ce mois-ci.",
-  avert2:        "Un avertissement de niveau 2 a été émis ce mois-ci.",
-  avert3:        "Un avertissement de niveau 3 a été émis ce mois-ci.",
-  avert4:        "Un avertissement de niveau 4 a été émis ce mois-ci.",
-}[rappels];
+const rappelsTexte = {
+  aucun:          "Pas de rappel ni avertissement ce mois-ci.",
+  rappel_officiel:"Un rappel officiel a été émis ce mois-ci.",
+  avert1:         "Un avertissement de niveau 1 a été émis ce mois-ci.",
+  avert2:         "Un avertissement de niveau 2 a été émis ce mois-ci.",
+  avert3:         "Un avertissement de niveau 3 a été émis ce mois-ci.",
+  avert4:         "Un avertissement de niveau 4 a été émis ce mois-ci.",
+}[rappels] || "Pas de rappel ni avertissement ce mois-ci.";
 
   // Conclusion
   const conclusionTexte = {
