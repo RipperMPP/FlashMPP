@@ -69,6 +69,7 @@ const sig_sdis = caserneBrute.split("|")[1];
   if (!nom || !pa || !cp || !humeur) {
     alert("⚠️ Merci de remplir au moins le pseudo et les statistiques.");
     return;
+  incrementerCompteur();
   }
 
   // Date automatique
@@ -312,4 +313,13 @@ function resetFormulaire() {
   document.getElementById("rappels").selectedIndex = 0;
   document.getElementById("resultat").className = "formulaire-cache";
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function incrementerCompteur() {
+  const url = "https://flashmpp-default-rtdb.europe-west1.firebasedatabase.app/compteur/avis.json";
+  fetch(url).then(r => r.json()).then(val => {
+    fetch(url, {
+      method: "PUT",
+      body: JSON.stringify((val || 0) + 1)
+    });
+  });
 }

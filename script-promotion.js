@@ -61,6 +61,7 @@ function genererPromotion() {
   if (!nom) {
     alert("⚠️ Merci de remplir le pseudo du joueur.");
     return;
+    incrementerCompteur();
   }
 
   // Date
@@ -169,4 +170,13 @@ function resetPromotion() {
   document.getElementById("avis").selectedIndex = 0;
   document.getElementById("resultat").className = "formulaire-cache";
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function incrementerCompteur() {
+  const url = "https://flashmpp-default-rtdb.europe-west1.firebasedatabase.app/compteur/avis.json";
+  fetch(url).then(r => r.json()).then(val => {
+    fetch(url, {
+      method: "PUT",
+      body: JSON.stringify((val || 0) + 1)
+    });
+  });
 }

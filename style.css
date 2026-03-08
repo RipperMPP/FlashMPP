@@ -212,4 +212,17 @@ button:hover {
   font-size: 11px;
   margin-top: 40px;
 
+<<<<<<< HEAD
+=======
+}
+.compteur {
+  text-align: center;
+  margin-top: 30px;
+  color: #8b949e;
+  font-size: 13px;
+}
+
+.compteur strong {
+  color: #e63946;
+>>>>>>> 7eb5b949500fe1b024522e2abbca836a43aac3e9
 }
