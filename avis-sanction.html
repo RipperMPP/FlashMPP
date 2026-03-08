@@ -1,0 +1,202 @@
+<link rel="stylesheet" href="style.css" />
+
+<div class="container">
+
+  <a href="index.html" class="btn-retour">← Retour</a>
+
+  <header>
+    <h1>⚡ FlashMPP</h1>
+    <p>Générateur d'avis administratif rapide</p>
+  </header>
+
+  <div class="formulaire-visible">
+    <h2>⚖️ Avis de Sanction</h2>
+
+    <!-- SANCTION -->
+    <div class="section">
+      <h3>⚠️ Type de sanction</h3>
+      <div class="champ">
+        <label>Niveau de sanction</label>
+        <select id="niveau_sanction">
+          <option value="rappel">Rappel Officiel</option>
+          <option value="avert1">Avertissement Niveau 1</option>
+          <option value="avert2">Avertissement Niveau 2</option>
+          <option value="avert3">Avertissement Niveau 3</option>
+          <option value="avert4">Avertissement Niveau 4</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Motif de la sanction</label>
+        <select id="motif">
+          <option value="planning">Planning non débloqué</option>
+          <option value="poste">Mauvaise gestion du poste</option>
+          <option value="formation">Heure de formation / visite médicale non libérée</option>
+          <option value="budget">Mauvaise gestion du budget</option>
+          <option value="vehicule">Indisponibilité véhicule suite à mauvaise gestion</option>
+          <option value="comportement">Mauvais comportement</option>
+          <option value="statistiques">Statistiques inférieures à 10%</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Date de la sanction</label>
+        <input type="date" id="date_sanction" />
+      </div>
+      <div class="champ">
+        <label>Date de la précédente sanction (laisser vide si aucune)</label>
+        <input type="text" id="date_precedente" placeholder="Ex: 01/02/2026 ou laisser vide" />
+      </div>
+    </div>
+
+    <!-- NDS -->
+    <div class="section">
+      <h3>📜 Note de Service</h3>
+      <div class="champ">
+        <label>Texte de la NDS à citer (sera mis dans un bloc quote)</label>
+        <textarea id="nds_texte" placeholder="Colle ici le texte de la NDS applicable..."></textarea>
+      </div>
+    </div>
+
+    <!-- DESTINATAIRE -->
+    <div class="section">
+      <h3>👤 Destinataire</h3>
+      <div class="champ">
+        <label>Grade</label>
+        <select id="dest_grade">
+          <option value="Sapeur|2">Sapeur</option>
+          <option value="Caporal|3">Caporal</option>
+          <option value="Caporal-Chef|4">Caporal-Chef</option>
+          <option value="Sergent|5">Sergent</option>
+          <option value="Sergent-Chef|6">Sergent-Chef</option>
+          <option value="Adjudant|7">Adjudant</option>
+          <option value="Adjudant-Chef|8">Adjudant-Chef</option>
+          <option value="Lieutenant|9">Lieutenant</option>
+          <option value="Capitaine|10">Capitaine</option>
+          <option value="Commandant|11">Commandant</option>
+          <option value="Lieutenant-Colonel|12">Lieutenant-Colonel</option>
+          <option value="Colonel|13">Colonel</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Pseudo</label>
+        <input type="text" id="dest_pseudo" placeholder="Pseudo du joueur" />
+      </div>
+      <div class="champ">
+        <label>Fonction (optionnel)</label>
+        <input type="text" id="dest_fonction" placeholder="Ex: Chef de Section Alpha" />
+      </div>
+    </div>
+
+    <!-- COPIES -->
+    <div class="section">
+      <h3>📋 En copies</h3>
+      <div id="liste_copies">
+        <div class="copie-item" id="copie_0">
+          <div class="champ">
+            <label>Grade</label>
+            <select class="copie_grade">
+              <option value="Sapeur|2">Sapeur</option>
+              <option value="Caporal|3">Caporal</option>
+              <option value="Caporal-Chef|4">Caporal-Chef</option>
+              <option value="Sergent|5">Sergent</option>
+              <option value="Sergent-Chef|6">Sergent-Chef</option>
+              <option value="Adjudant|7">Adjudant</option>
+              <option value="Adjudant-Chef|8">Adjudant-Chef</option>
+              <option value="Lieutenant|9">Lieutenant</option>
+              <option value="Capitaine|10">Capitaine</option>
+              <option value="Commandant|11">Commandant</option>
+              <option value="Lieutenant-Colonel|12">Lieutenant-Colonel</option>
+              <option value="Colonel|13">Colonel</option>
+            </select>
+          </div>
+          <div class="champ">
+            <label>Pseudo</label>
+            <input type="text" class="copie_pseudo" placeholder="Pseudo" />
+          </div>
+          <div class="champ">
+            <label>Fonction</label>
+            <input type="text" class="copie_fonction" placeholder="Ex: Chef de Centre Adjoint" />
+          </div>
+          <div class="champ">
+            <label>Caserne</label>
+            <input type="text" class="copie_caserne" placeholder="Ex: CIS Lambesc" />
+          </div>
+        </div>
+      </div>
+      <button type="button" onclick="ajouterCopie()" style="background-color:#238636; margin-top:5px;">+ Ajouter une copie</button>
+      <button type="button" onclick="supprimerCopie()" style="background-color:#30363d; margin-top:5px;">- Supprimer la dernière</button>
+    </div>
+
+    <!-- ÉMETTEUR -->
+    <div class="section">
+      <h3>✍️ Émetteur</h3>
+      <div class="champ">
+        <label>Ton grade</label>
+        <select id="sig_grade">
+          <option value="Sergent-Chef|6">Sergent-Chef</option>
+          <option value="Adjudant|7">Adjudant</option>
+          <option value="Adjudant-Chef|8">Adjudant-Chef</option>
+          <option value="Lieutenant|9">Lieutenant</option>
+          <option value="Capitaine|10">Capitaine</option>
+          <option value="Commandant|11">Commandant</option>
+          <option value="Lieutenant-Colonel|12">Lieutenant-Colonel</option>
+          <option value="Colonel|13">Colonel</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Ton pseudo</label>
+        <input type="text" id="sig_pseudo" placeholder="Ton Pseudo" />
+      </div>
+      <div class="champ">
+        <label>Ta fonction</label>
+        <select id="sig_fonction">
+          <option value="Chef de Section">Chef de Section</option>
+          <option value="Chef de Centre Adjoint">Chef de Centre Adjoint</option>
+          <option value="Chef de Centre">Chef de Centre</option>
+          <option value="Responsable Ressources Humaines">Responsable Ressources Humaines</option>
+          <option value="Responsable Ressources Humaines Adjoint">Responsable Ressources Humaines Adjoint</option>
+          <option value="Chef de Groupement">Chef de Groupement</option>
+          <option value="Chef de Groupement Adjoint">Chef de Groupement Adjoint</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Caserne / Groupement</label>
+        <select id="sig_caserne">
+          <optgroup label="--- SDIS 13 — Bouches-du-Rhône ---">
+            <option value="CIS Alpilles-Durance|13">CIS Alpilles-Durance</option>
+            <option value="CIS Chateaurenard|13">CIS Chateaurenard</option>
+            <option value="CIS Eyguières|13">CIS Eyguières</option>
+            <option value="CIS Istres|13">CIS Istres</option>
+            <option value="CIS Lambesc|13">CIS Lambesc</option>
+            <option value="CIS Mallemort|13">CIS Mallemort</option>
+            <option value="CIS Salon-de-Provence|13">CIS Salon-de-Provence</option>
+            <option value="CIS Vallée des Baux|13">CIS Vallée des Baux</option>
+            <option value="Groupement Centre|13">Groupement Centre</option>
+            <option value="Groupement Nord|13">Groupement Nord</option>
+          </optgroup>
+          <optgroup label="--- SDIS 67 — Bas-Rhin ---">
+            <option value="CIS Bischwiller|67">CIS Bischwiller</option>
+            <option value="CIS Molsheim|67">CIS Molsheim</option>
+            <option value="CIS Petersbach|67">CIS Petersbach</option>
+            <option value="CIS Saverne|67">CIS Saverne</option>
+            <option value="CIS Strasbourg Ouest|67">CIS Strasbourg Ouest</option>
+            <option value="CIS Truchtersheim|67">CIS Truchtersheim</option>
+            <option value="CIS Val de Moder|67">CIS Val de Moder</option>
+            <option value="CIS Wasselonne|67">CIS Wasselonne</option>
+            <option value="Groupement Nord|67">Groupement Nord</option>
+            <option value="Groupement Sud|67">Groupement Sud</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+
+    <button onclick="genererSanction()">📄 Générer la sanction</button>
+    <button type="button" onclick="resetSanction()" style="background-color:#30363d; margin-top:10px;">🔄 Réinitialiser</button>
+  </div>
+
+  <div id="resultat" class="formulaire-cache"></div>
+
+  <p class="signature-auteur">Par Ripper</p>
+
+</div>
+
+<script src="script-sanction.js?v=3"></script>
