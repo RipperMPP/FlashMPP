@@ -59,6 +59,7 @@ function genererSanction() {
   if (!dest_pseudo || !sig_pseudo || !date_sanction) {
     alert("⚠️ Merci de remplir le pseudo destinataire, émetteur et la date.");
     return;
+    incrementerCompteur();
   }
 
   // Formatage date
@@ -214,4 +215,13 @@ function resetSanction() {
     </div>`;
   nbCopies = 1;
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function incrementerCompteur() {
+  const url = "https://flashmpp-default-rtdb.europe-west1.firebasedatabase.app/compteur/avis.json";
+  fetch(url).then(r => r.json()).then(val => {
+    fetch(url, {
+      method: "PUT",
+      body: JSON.stringify((val || 0) + 1)
+    });
+  });
 }
