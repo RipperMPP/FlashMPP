@@ -1,7 +1,9 @@
 <link rel="stylesheet" href="style.css" />
 
 <div class="container large">
-
+<div id="popup-maj" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#238636; color:white; padding:12px 24px; border-radius:8px; font-size:14px; z-index:9999; box-shadow:0 4px 12px rgba(0,0,0,0.4);">
+  ✅ Site mis à jour avec succès !
+</div>
   <header>
     <h1>⚡ FlashMPP</h1>
     <p>Générateur d'avis - MonPompier.com</p>
@@ -36,5 +38,37 @@
   </a>
   </div>
   </div>
+<div style="text-align:center; margin-top:30px;">
+  <button onclick="majSite()" style="background-color:#30363d; font-size:12px; padding:8px 16px;">🔄 Mettre à jour le site</button>
+</div>
+<div class="compteur">
+  <span>📄 <strong id="nb-avis">...</strong> avis générés grâce à FlashMPP</span>
+</div>
+
+<script>
+  fetch("https://flashmpp-default-rtdb.europe-west1.firebasedatabase.app/compteur/avis.json")
+    .then(r => r.json())
+    .then(val => {
+      document.getElementById("nb-avis").innerText = val || 0;
+    })
+    .catch(() => {
+      document.getElementById("nb-avis").innerText = "0";
+    });
+</script>  
 <p class="signature-auteur">Par Ripper</p>
+<script>
+  function majSite() {
+  if ('caches' in window) {
+    caches.keys().then(names => {
+      names.forEach(name => caches.delete(name));
+    });
+  }
+  const popup = document.getElementById("popup-maj");
+  popup.style.display = "block";
+  setTimeout(() => {
+    popup.style.display = "none";
+    location.reload(true);
+  }, 2000);
+}
+</script>
 </div>
