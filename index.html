@@ -41,7 +41,21 @@
 <div style="text-align:center; margin-top:30px;">
   <button onclick="majSite()" style="background-color:#30363d; font-size:12px; padding:8px 16px;">🔄 Mettre à jour le site</button>
 </div>
-  <p class="signature-auteur">Par Ripper</p>
+<div class="compteur">
+  <span>📄 <strong id="nb-avis">...</strong> avis générés grâce à FlashMPP</span>
+</div>
+
+<script>
+  fetch("https://flashmpp-default-rtdb.europe-west1.firebasedatabase.app/compteur/avis.json")
+    .then(r => r.json())
+    .then(val => {
+      document.getElementById("nb-avis").innerText = val || 0;
+    })
+    .catch(() => {
+      document.getElementById("nb-avis").innerText = "0";
+    });
+</script>  
+<p class="signature-auteur">Par Ripper</p>
 <script>
   function majSite() {
   if ('caches' in window) {
