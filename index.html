@@ -33,7 +33,19 @@
   <p>Prochainement disponible.</p>
   <button class="btn-disabled" disabled>Bientôt</button>
 </div>
-
+<div class="compteur">
+  <span>👥 Visiteurs : <strong id="compteur-total">...</strong></span>
+</div>
   </div>
 <p class="signature-auteur">Par Ripper</p>
+<script>
+  fetch("https://counterapi.dev/api/flashmpp/visits/hit")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("compteur-total").innerText = data.value;
+    })
+    .catch(() => {
+      document.getElementById("compteur-total").innerText = "N/A";
+    });
+</script>
 </div>
