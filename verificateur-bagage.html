@@ -398,20 +398,32 @@ Vous pouvez simplement copier-coller toutes vos formations depuis votre profil, 
 
     <script>
   const equivalences = {
+    // Secours à personnes
     "PSE 1": ["PSE 2"],
     "SAP 1": ["SAP 2"],
+    // Opérations / Commandement
     "GOC 1": ["GOC 2", "GOC 3", "GOC 4"],
     "GOC 2": ["GOC 3", "GOC 4"],
     "GOC 3": ["GOC 4"],
     "TOP 2": ["TOP 3", "TOP 4"],
     "TOP 3": ["TOP 4"],
+    // Incendie / Forêt
+    "INC 1": ["INC 2", "INC 3"],
+    "INC 2": ["INC 3"],
     "FDF 1": ["FDF 2", "FDF 3", "FDF 4"],
     "FDF 2": ["FDF 3", "FDF 4"],
+    "FDF 3": ["FDF 4"],
+    // Spécialités (Risques, Plongée, SDE, IMP, ELD)
     "RAD 1": ["RAD 2", "RAD 3"],
+    "RAD 2": ["RAD 3"],
     "RCH 1": ["RCH 2", "RCH 3"],
+    "RCH 2": ["RCH 3"],
     "REP 1": ["REP 2"],
-    "INC 1": ["INC 2", "INC 3"],
-    "COD 1": ["COD 2", "COD 4", "COD 6"]
+    "PLG 1": ["PLG 2", "PLG 3"],
+    "SDE 1": ["SDE 2", "SDE 3"],
+    "IMP 1": ["IMP 2", "IMP 3"],
+    "IMP 2": ["IMP 3"],
+    "ELD 1": ["ELD 2", "ELD 3"],
 };
         // Base de données des formations requises par grade
         const formationsRequises = {
@@ -481,7 +493,8 @@ Vous pouvez simplement copier-coller toutes vos formations depuis votre profil, 
 
         // Parser les formations saisies
         function parseFormations(text) {
-            const lines = text.split('\n');
+// Dans la fonction parseFormations, remplace le split par celui-ci :
+const lines = text.split(/[\n\-:]/); // Découpe par saut de ligne, tiret ou deux-points
             const formations = new Set();
             
             lines.forEach(line => {
