@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérificateur de Bagage Formatif - FlashMPP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 140, 66, 0.1);
+            border-radius: 15px;
+            border: 2px solid #ff8c42;
+        }
+
+        h1 {
+            color: #ff8c42;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #cccccc;
+            font-size: 1em;
+            font-weight: 300;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 140, 66, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ff8c42;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #ff8c42;
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select:hover {
+            background: rgba(255, 140, 66, 0.1);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #ffaa66;
+            box-shadow: 0 0 10px rgba(255, 140, 66, 0.5);
+        }
+
+        option {
+            background: #2d2d2d;
+            color: #ffffff;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #ff8c42;
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95em;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #ffaa66;
+            box-shadow: 0 0 10px rgba(255, 140, 66, 0.5);
+        }
+
+        textarea::placeholder {
+            color: #888888;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff8c42 0%, #ff6b1a 100%);
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 140, 66, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 140, 66, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .results {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .result-section {
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #ff8c42;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-icon {
+            font-size: 1.5em;
+        }
+
+        .status-complete {
+            color: #4CAF50;
+        }
+
+        .status-incomplete {
+            color: #f44336;
+        }
+
+        .formations-list {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .formation-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(255, 140, 66, 0.1);
+            border-left: 4px solid #ff8c42;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .formation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 140, 66, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ff8c42;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #ff8c42;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #cccccc;
+        }
+
+        .info-box {
+            background: rgba(33, 150, 243, 0.1);
+            border: 1px solid #2196F3;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #90CAF9;
+            font-size: 0.9em;
+        }
+
+        .info-box strong {
+            color: #2196F3;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #888888;
+        }
+
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 0.9em;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.error {
+            background: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎖️ Vérificateur de Bagage Formatif</h1>
+            <p class="subtitle">Vérifiez vos formations requises pour votre grade - MonPompier.com</p>
+        </header>
+
+        <div class="card">
+            <div class="info-box">
+                <strong>💡 Comment ça marche ?</strong><br>
+                1. Sélectionnez votre grade<br>
+                2. Copiez-collez vos formations depuis votre profil MonPompier.com<br>
+                3. Cliquez sur "Vérifier" pour voir ce qui manque
+            </div>
+
+            <div class="form-group">
+                <label for="grade">Sélectionnez votre grade :</label>
+                <select id="grade">
+                    <option value="">-- Choisissez un grade --</option>
+                    <optgroup label="Hommes du Rang">
+                        <option value="sapeur2">Sapeur 2ème classe</option>
+                        <option value="sapeur1">Sapeur 1ère classe</option>
+                        <option value="caporal">Caporal</option>
+                        <option value="caporalChef">Caporal-Chef</option>
+                    </optgroup>
+                    <optgroup label="Sous-Officiers">
+                        <option value="sergent">Sergent</option>
+                        <option value="sergentChef">Sergent-Chef</option>
+                        <option value="adjudant">Adjudant</option>
+                        <option value="adjudantChef">Adjudant-Chef</option>
+                    </optgroup>
+                    <optgroup label="Officiers">
+                        <option value="lieutenant">Lieutenant</option>
+                        <option value="capitaine">Capitaine</option>
+                        <option value="commandant">Commandant</option>
+                        <option value="lieutenantColonel">Lieutenant-Colonel</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="formations">Collez vos formations ici :</label>
+                <textarea id="formations" placeholder="Exemple :
+PSE 1
+FIA
+PSE 2
+SAP 1
+Permis B
+COD 1
+GOC 1
+TOP 2
+
+Vous pouvez simplement copier-coller toutes vos formations depuis votre profil, une par ligne ou toutes ensemble."></textarea>
+            </div>
+
+            <button class="btn" onclick="verifierFormations()">🔍 Vérifier mes formations</button>
+        </div>
+
+        <div id="results" class="results">
+            <div class="card">
+                <div class="stats" id="stats"></div>
+                <div id="resultContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // Base de données des formations requises par grade
+        const formationsRequises = {
+            sapeur2: {
+                label: "Sapeur 2ème classe",
+                formations: ["PSE 1", "FIA"]
+            },
+            sapeur1: {
+                label: "Sapeur 1ère classe",
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B"]
+            },
+            caporal: {
+                label: "Caporal",
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR"]
+            },
+            caporalChef: {
+                label: "Caporal-Chef",
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2"]
+            },
+            sergent: {
+                label: "Sergent",
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1"]
+            },
+            sergentChef: {
+                label: "Sergent-Chef",
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2"]
+            },
+            adjudant: {
+                label: "Adjudant",
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2"]
+            },
+            adjudantChef: {
+                label: "Adjudant-Chef",
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2"]
+            },
+            lieutenant: {
+                label: "Lieutenant",
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION"]
+            },
+            capitaine: {
+                label: "Capitaine",
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION", "GOC 3", "TOP 4", "REP 2", "FDF 3", "RAD 1", "RCH 1", "CHEF DE CENTRE"]
+            },
+            commandant: {
+                label: "Commandant",
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION", "GOC 3", "TOP 4", "REP 2", "FDF 3", "RAD 1", "RCH 1", "CHEF DE CENTRE", "GOC 4", "INC 3", "FDF 4", "PLG 3", "RAD 3", "RCH 3", "SDE 3", "ELD 3", "IMP 1", "PLG 1", "SDE 1", "ELD 1", "IMP 2", "RAD 2", "RCH 2", "SDE 2", "IMP 3"]
+            },
+            lieutenantColonel: {
+                label: "Lieutenant-Colonel",
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION", "GOC 3", "TOP 4", "REP 2", "FDF 3", "RAD 1", "RCH 1", "CHEF DE CENTRE", "GOC 4", "INC 3", "FDF 4", "PLG 3", "RAD 3", "RCH 3", "SDE 3", "ELD 3", "IMP 1", "PLG 1", "SDE 1", "ELD 1", "IMP 2", "RAD 2", "RCH 2", "SDE 2", "IMP 3", "CHEF DE GROUPEMENT"]
+            }
+        };
+
+        // Normaliser le texte pour la comparaison
+        function normalizeText(text) {
+            return text
+                .toUpperCase()
+                .trim()
+                .replace(/\s+/g, ' ')
+                .replace(/[ÉÈÊË]/g, 'E')
+                .replace(/[ÀÂÄ]/g, 'A')
+                .replace(/[ÎÏ]/g, 'I')
+                .replace(/[ÔÖ]/g, 'O')
+                .replace(/[ÙÛÜ]/g, 'U')
+                .replace(/Ç/g, 'C');
+        }
+
+        // Parser les formations saisies
+        function parseFormations(text) {
+            const lines = text.split('\n');
+            const formations = new Set();
+            
+            lines.forEach(line => {
+                const cleaned = line.trim();
+                if (cleaned) {
+                    // Extraire toutes les formations possibles de la ligne
+                    const words = cleaned.split(/\s+/);
+                    let currentFormation = '';
+                    
+                    for (let i = 0; i < words.length; i++) {
+                        currentFormation = words.slice(i).join(' ');
+                        
+                        // Vérifier si c'est une formation connue
+                        Object.values(formationsRequises).forEach(grade => {
+                            grade.formations.forEach(formation => {
+                                if (normalizeText(currentFormation).includes(normalizeText(formation))) {
+                                    formations.add(normalizeText(formation));
+                                }
+                            });
+                        });
+                    }
+                    
+                    // Ajouter aussi la ligne complète normalisée
+                    formations.add(normalizeText(cleaned));
+                }
+            });
+            
+            return formations;
+        }
+
+        // Vérifier si une formation est présente
+        function hasFormation(userFormations, requiredFormation) {
+            const normalizedRequired = normalizeText(requiredFormation);
+            
+            for (let userFormation of userFormations) {
+                if (userFormation.includes(normalizedRequired) || normalizedRequired.includes(userFormation)) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        // Afficher un toast
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show' + (isError ? ' error' : '');
+            
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 3000);
+        }
+
+        // Vérifier les formations
+        function verifierFormations() {
+            const gradeSelect = document.getElementById('grade');
+            const formationsText = document.getElementById('formations').value;
+            const resultsDiv = document.getElementById('results');
+            const resultContent = document.getElementById('resultContent');
+            const statsDiv = document.getElementById('stats');
+
+            // Validation
+            if (!gradeSelect.value) {
+                showToast('❌ Veuillez sélectionner un grade', true);
+                return;
+            }
+
+            if (!formationsText.trim()) {
+                showToast('❌ Veuillez saisir vos formations', true);
+                return;
+            }
+
+            // Parser les formations de l'utilisateur
+            const userFormations = parseFormations(formationsText);
+            const gradeData = formationsRequises[gradeSelect.value];
+            
+            // Comparer avec les formations requises
+            const manquantes = [];
+            const presentes = [];
+
+            gradeData.formations.forEach(formation => {
+                if (hasFormation(userFormations, formation)) {
+                    presentes.push(formation);
+                } else {
+                    manquantes.push(formation);
+                }
+            });
+
+            // Calculer les statistiques
+            const total = gradeData.formations.length;
+            const completees = presentes.length;
+            const pourcentage = Math.round((completees / total) * 100);
+
+            // Afficher les statistiques
+            statsDiv.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${completees}/${total}</div>
+                    <div class="stat-label">Formations validées</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${manquantes.length}</div>
+                    <div class="stat-label">Formations manquantes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${pourcentage}%</div>
+                    <div class="stat-label">Progression</div>
+                </div>
+            `;
+
+            // Afficher les résultats
+            let html = '';
+
+            // Section formations manquantes
+            html += `
+                <div class="result-section">
+                    <div class="result-title">
+                        <span class="status-icon ${manquantes.length === 0 ? 'status-complete' : 'status-incomplete'}">
+                            ${manquantes.length === 0 ? '✅' : '⚠️'}
+                        </span>
+                        Formations manquantes pour ${gradeData.label}
+                    </div>
+                    <div class="formations-list">
+            `;
+
+            if (manquantes.length === 0) {
+                html += `<div class="empty-state">
+                    <div class="empty-state-icon">🎉</div>
+                    <p>Félicitations ! Vous avez toutes les formations requises pour votre grade !</p>
+                </div>`;
+            } else {
+                manquantes.forEach(formation => {
+                    html += `<div class="formation-item">❌ ${formation}</div>`;
+                });
+            }
+
+            html += `</div></div>`;
+
+            // Section formations présentes
+            if (presentes.length > 0) {
+                html += `
+                    <div class="result-section">
+                        <div class="result-title">
+                            <span class="status-icon status-complete">✅</span>
+                            Formations validées
+                        </div>
+                        <div class="formations-list">
+                `;
+
+                presentes.forEach(formation => {
+                    html += `<div class="formation-item">✅ ${formation}</div>`;
+                });
+
+                html += `</div></div>`;
+            }
+
+            resultContent.innerHTML = html;
+            resultsDiv.classList.add('show');
+
+            // Scroll vers les résultats
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            // Toast de succès
+            if (manquantes.length === 0) {
+                showToast('🎉 Bagage complet !');
+            } else {
+                showToast(`ℹ️ ${manquantes.length} formation(s) manquante(s)`);
+            }
+        }
+
+        // Permettre d'appuyer sur Entrée dans le textarea
+        document.getElementById('formations').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                verifierFormations();
+            }
+        });
+    </script>
+</body>
+</html>
