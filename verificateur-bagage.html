@@ -397,14 +397,21 @@ Vous pouvez simplement copier-coller toutes vos formations depuis votre profil, 
     <div id="toast" class="toast"></div>
 
     <script>
-        const equivalences = {
-    "PSE 1": ["PSE 2"], // Si j'ai le PSE 2, j'ai d'office le PSE 1
+  const equivalences = {
+    "PSE 1": ["PSE 2"],
     "SAP 1": ["SAP 2"],
     "GOC 1": ["GOC 2", "GOC 3", "GOC 4"],
-    "FDF 1": ["FDF 2", "FDF 3", "FDF 4"],
-    "COD 1": ["COD 2"],
+    "GOC 2": ["GOC 3", "GOC 4"],
+    "GOC 3": ["GOC 4"],
     "TOP 2": ["TOP 3", "TOP 4"],
-    "INC 1": ["INC 2", "INC 3"]
+    "TOP 3": ["TOP 4"],
+    "FDF 1": ["FDF 2", "FDF 3", "FDF 4"],
+    "FDF 2": ["FDF 3", "FDF 4"],
+    "RAD 1": ["RAD 2", "RAD 3"],
+    "RCH 1": ["RCH 2", "RCH 3"],
+    "REP 1": ["REP 2"],
+    "INC 1": ["INC 2", "INC 3"],
+    "COD 1": ["COD 2", "COD 4", "COD 6"]
 };
         // Base de données des formations requises par grade
         const formationsRequises = {
@@ -506,23 +513,25 @@ Vous pouvez simplement copier-coller toutes vos formations depuis votre profil, 
         }
 
         // Vérifier si une formation est présente
-        function hasFormation(userFormations, requiredFormation) {
+function hasFormation(userFormations, requiredFormation) {
     const normalizedRequired = normalizeText(requiredFormation);
     
-    // 1. Vérification directe (est-ce qu'il a exactement la formation ?)
+    // 1. Vérification directe (ex: j'ai le RAD 1 ?)
     for (let userFormation of userFormations) {
         if (userFormation === normalizedRequired || userFormation.includes(normalizedRequired)) {
             return true;
         }
     }
 
-    // 2. Vérification par équivalence (est-ce qu'il a un niveau supérieur ?)
-    const equivalentsSuperieurs = equivalences[requiredFormation];
-    if (equivalentsSuperieurs) {
-        for (let equiv of equivalentsSuperieurs) {
-            const normalizedEquiv = normalizeText(equiv);
+    // 2. Vérification par équivalence (ex: j'ai le RAD 2, donc j'ai le RAD 1)
+    const niveauSuperieurs = equivalences[requiredFormation];
+    if (niveauSuperieurs) {
+        for (let niveauSup of niveauSuperieurs) {
+            const normalizedSup = normalizeText(niveauSup);
             for (let userFormation of userFormations) {
-                if (userFormation === normalizedEquiv || userFormation.includes(normalizedEquiv)) {
+                // On utilise une regex pour éviter que "COD 1" match avec "COD 10"
+                const regex = new RegExp(`\\b${normalizedSup}\\b`, 'i');
+                if (regex.test(userFormation)) {
                     return true;
                 }
             }
