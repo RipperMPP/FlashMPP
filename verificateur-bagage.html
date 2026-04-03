@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="style.css" />
 <html lang="fr">
 <head>
+    <link rel="stylesheet" href="style.css" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vérificateur de Bagage Formatif - FlashMPP</title>
@@ -33,6 +33,23 @@
             border-radius: 15px;
             border: 2px solid #e63946;
         }
+
+        optgroup {
+    background-color: #1a1f26; /* Un fond légèrement plus clair que le body */
+    color: #ff8c42;           /* Une couleur orange/corail bien visible */
+    font-style: normal;       /* Enlève l'italique par défaut */
+    font-weight: 700;         /* Met le titre en gras */
+    text-transform: uppercase; /* Met en majuscules pour mieux séparer les sections */
+    font-size: 0.85em;        /* Légèrement plus petit pour un look pro */
+}
+
+/* On s'assure que les options à l'intérieur restent blanches */
+option {
+    color: #ffffff;
+    background-color: #2d2d2d;
+    text-transform: none;
+    font-weight: 400;
+}
 
         h1 {
             color: #e63946;
@@ -143,6 +160,19 @@
         .btn:active {
             transform: translateY(0);
         }
+
+        .btn-retour {
+    display: inline-block;
+    text-decoration: none;
+    color: #cccccc;
+    margin-bottom: 20px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.btn-retour:hover {
+    color: #e63946;
+}
 
         .results {
             display: none;
@@ -364,10 +394,18 @@ Vous pouvez simplement copier-coller toutes vos formations depuis votre profil, 
             </div>
         </div>
     </div>
-
     <div id="toast" class="toast"></div>
 
     <script>
+        const equivalences = {
+    "PSE 1": ["PSE 2"], // Si j'ai le PSE 2, j'ai d'office le PSE 1
+    "SAP 1": ["SAP 2"],
+    "GOC 1": ["GOC 2", "GOC 3", "GOC 4"],
+    "FDF 1": ["FDF 2", "FDF 3", "FDF 4"],
+    "COD 1": ["COD 2"],
+    "TOP 2": ["TOP 3", "TOP 4"],
+    "INC 1": ["INC 2", "INC 3"]
+};
         // Base de données des formations requises par grade
         const formationsRequises = {
             sapeur2: {
@@ -380,43 +418,43 @@ Vous pouvez simplement copier-coller toutes vos formations depuis votre profil, 
             },
             caporal: {
                 label: "Caporal",
-                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR"]
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOPSR"]
             },
             caporalChef: {
                 label: "Caporal-Chef",
-                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2"]
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOPSR", "Permis C", "COD 1", "GOC 1", "TOP 2"]
             },
             sergent: {
                 label: "Sergent",
-                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1"]
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOPSR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1"]
             },
             sergentChef: {
                 label: "Sergent-Chef",
-                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2"]
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOPSR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2"]
             },
             adjudant: {
                 label: "Adjudant",
-                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2"]
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOPSR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2"]
             },
             adjudantChef: {
                 label: "Adjudant-Chef",
-                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2"]
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOPSR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2"]
             },
             lieutenant: {
                 label: "Lieutenant",
-                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION"]
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOPSR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION"]
             },
             capitaine: {
                 label: "Capitaine",
-                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION", "GOC 3", "TOP 4", "REP 2", "FDF 3", "RAD 1", "RCH 1", "CHEF DE CENTRE"]
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOPSR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION", "GOC 3", "TOP 4", "REP 2", "FDF 3", "RAD 1", "RCH 1", "CHEF DE CENTRE"]
             },
             commandant: {
                 label: "Commandant",
-                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION", "GOC 3", "TOP 4", "REP 2", "FDF 3", "RAD 1", "RCH 1", "CHEF DE CENTRE", "GOC 4", "INC 3", "FDF 4", "PLG 3", "RAD 3", "RCH 3", "SDE 3", "ELD 3", "IMP 1", "PLG 1", "SDE 1", "ELD 1", "IMP 2", "RAD 2", "RCH 2", "SDE 2", "IMP 3"]
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOPSR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION", "GOC 3", "TOP 4", "REP 2", "FDF 3", "RAD 1", "RCH 1", "CHEF DE CENTRE", "GOC 4", "INC 3", "FDF 4", "PLG 3", "RAD 3", "RCH 3", "SDE 3", "ELD 3", "IMP 1", "PLG 1", "SDE 1", "ELD 1", "IMP 2", "RAD 2", "RCH 2", "SDE 2", "IMP 3"]
             },
             lieutenantColonel: {
                 label: "Lieutenant-Colonel",
-                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOP SR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION", "GOC 3", "TOP 4", "REP 2", "FDF 3", "RAD 1", "RCH 1", "CHEF DE CENTRE", "GOC 4", "INC 3", "FDF 4", "PLG 3", "RAD 3", "RCH 3", "SDE 3", "ELD 3", "IMP 1", "PLG 1", "SDE 1", "ELD 1", "IMP 2", "RAD 2", "RCH 2", "SDE 2", "IMP 3", "CHEF DE GROUPEMENT"]
+                formations: ["PSE 1", "FIA", "PSE 2", "SAP 1", "Permis B", "TOPSR", "Permis C", "COD 1", "GOC 1", "TOP 2", "FDF 1", "CAD 2", "GOC 2", "REP 1", "TOP 3", "MNG 1", "DIV 2", "SAP 2", "FDF 2", "INC 2", "COD 2", "TRS 1", "CHEF DE SECTION", "GOC 3", "TOP 4", "REP 2", "FDF 3", "RAD 1", "RCH 1", "CHEF DE CENTRE", "GOC 4", "INC 3", "FDF 4", "PLG 3", "RAD 3", "RCH 3", "SDE 3", "ELD 3", "IMP 1", "PLG 1", "SDE 1", "ELD 1", "IMP 2", "RAD 2", "RCH 2", "SDE 2", "IMP 3", "CHEF DE GROUPEMENT"]
             }
         };
 
@@ -469,16 +507,30 @@ Vous pouvez simplement copier-coller toutes vos formations depuis votre profil, 
 
         // Vérifier si une formation est présente
         function hasFormation(userFormations, requiredFormation) {
-            const normalizedRequired = normalizeText(requiredFormation);
-            
+    const normalizedRequired = normalizeText(requiredFormation);
+    
+    // 1. Vérification directe (est-ce qu'il a exactement la formation ?)
+    for (let userFormation of userFormations) {
+        if (userFormation === normalizedRequired || userFormation.includes(normalizedRequired)) {
+            return true;
+        }
+    }
+
+    // 2. Vérification par équivalence (est-ce qu'il a un niveau supérieur ?)
+    const equivalentsSuperieurs = equivalences[requiredFormation];
+    if (equivalentsSuperieurs) {
+        for (let equiv of equivalentsSuperieurs) {
+            const normalizedEquiv = normalizeText(equiv);
             for (let userFormation of userFormations) {
-                if (userFormation.includes(normalizedRequired) || normalizedRequired.includes(userFormation)) {
+                if (userFormation === normalizedEquiv || userFormation.includes(normalizedEquiv)) {
                     return true;
                 }
             }
-            
-            return false;
         }
+    }
+    
+    return false;
+}
 
         // Afficher un toast
         function showToast(message, isError = false) {
