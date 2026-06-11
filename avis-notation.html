@@ -1,0 +1,210 @@
+<link rel="stylesheet" href="style.css" />
+
+<div class="container">
+
+  <a href="index.html" class="btn-retour">← Retour</a>
+
+  <header>
+    <h1>⚡ FlashMPP</h1>
+    <p>Générateur d'avis administratif rapide</p>
+  </header>
+
+  <div class="formulaire-visible">
+
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Progression</span>
+        <span id="progress-pct">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <h2>⭐ Avis de Notation</h2>
+
+    <!-- IDENTITÉ -->
+    <div class="section">
+      <h3>👤 Identité</h3>
+      <div class="champ">
+        <label>Grade</label>
+        <select id="grade">
+          <option value="Sapeur">Sapeur</option>
+          <option value="Caporal">Caporal</option>
+          <option value="Caporal-Chef">Caporal-Chef</option>
+          <option value="Sergent">Sergent</option>
+          <option value="Sergent-Chef">Sergent-Chef</option>
+          <option value="Adjudant">Adjudant</option>
+          <option value="Adjudant-Chef">Adjudant-Chef</option>
+          <option value="Lieutenant">Lieutenant</option>
+          <option value="Capitaine">Capitaine</option>
+          <option value="Commandant">Commandant</option>
+          <option value="Lieutenant-Colonel">Lieutenant-Colonel</option>
+          <option value="Colonel">Colonel</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Pseudo du joueur</label>
+        <input type="text" id="nom" placeholder="Pseudo" oninput="updateProgress()" />
+      </div>
+    </div>
+
+    <!-- NOTATION -->
+    <div class="section">
+      <h3>📊 Notation</h3>
+
+      <div class="critere">
+        <div class="critere-header">
+          <span class="critere-label">📡 Communication</span>
+          <span class="critere-score" id="score_communication">0 / 5</span>
+        </div>
+        <div class="note-btns" id="btns_communication">
+          <button type="button" class="note-btn active" data-critere="communication" data-val="0">0</button>
+          <button type="button" class="note-btn" data-critere="communication" data-val="1">1</button>
+          <button type="button" class="note-btn" data-critere="communication" data-val="2">2</button>
+          <button type="button" class="note-btn" data-critere="communication" data-val="3">3</button>
+          <button type="button" class="note-btn" data-critere="communication" data-val="4">4</button>
+          <button type="button" class="note-btn" data-critere="communication" data-val="5">5</button>
+        </div>
+      </div>
+
+      <div class="critere">
+        <div class="critere-header">
+          <span class="critere-label">📅 Présence</span>
+          <span class="critere-score" id="score_presence">0 / 5</span>
+        </div>
+        <div class="note-btns" id="btns_presence">
+          <button type="button" class="note-btn active" data-critere="presence" data-val="0">0</button>
+          <button type="button" class="note-btn" data-critere="presence" data-val="1">1</button>
+          <button type="button" class="note-btn" data-critere="presence" data-val="2">2</button>
+          <button type="button" class="note-btn" data-critere="presence" data-val="3">3</button>
+          <button type="button" class="note-btn" data-critere="presence" data-val="4">4</button>
+          <button type="button" class="note-btn" data-critere="presence" data-val="5">5</button>
+        </div>
+      </div>
+
+      <div class="critere">
+        <div class="critere-header">
+          <span class="critere-label">💼 Travail Fourni / Investissement</span>
+          <span class="critere-score" id="score_travail">0 / 5</span>
+        </div>
+        <div class="note-btns" id="btns_travail">
+          <button type="button" class="note-btn active" data-critere="travail" data-val="0">0</button>
+          <button type="button" class="note-btn" data-critere="travail" data-val="1">1</button>
+          <button type="button" class="note-btn" data-critere="travail" data-val="2">2</button>
+          <button type="button" class="note-btn" data-critere="travail" data-val="3">3</button>
+          <button type="button" class="note-btn" data-critere="travail" data-val="4">4</button>
+          <button type="button" class="note-btn" data-critere="travail" data-val="5">5</button>
+        </div>
+      </div>
+
+      <div class="critere">
+        <div class="critere-header">
+          <span class="critere-label">🤝 Comportement / Savoir-être</span>
+          <span class="critere-score" id="score_comportement">0 / 5</span>
+        </div>
+        <div class="note-btns" id="btns_comportement">
+          <button type="button" class="note-btn active" data-critere="comportement" data-val="0">0</button>
+          <button type="button" class="note-btn" data-critere="comportement" data-val="1">1</button>
+          <button type="button" class="note-btn" data-critere="comportement" data-val="2">2</button>
+          <button type="button" class="note-btn" data-critere="comportement" data-val="3">3</button>
+          <button type="button" class="note-btn" data-critere="comportement" data-val="4">4</button>
+          <button type="button" class="note-btn" data-critere="comportement" data-val="5">5</button>
+        </div>
+      </div>
+
+      <div class="note-globale">
+        Note globale : <strong id="note-globale-val">0</strong> / 20
+      </div>
+
+    </div>
+
+    <!-- SIGNATURE -->
+    <div class="section">
+      <h3>✍️ Signature</h3>
+
+      <div class="champ champ-toggle">
+        <label class="toggle-label">
+          <input type="checkbox" id="opt_entete" />
+          Inclure l'en-tête <code>[Avis de Notation]</code>
+        </label>
+      </div>
+      <div class="champ champ-toggle">
+        <label class="toggle-label">
+          <input type="checkbox" id="opt_signature" />
+          Inclure la ligne de signature
+        </label>
+      </div>
+
+      <div class="champ">
+        <label>Ton grade</label>
+        <select id="sig_grade">
+          <option value="Sergent-Chef">Sergent-Chef</option>
+          <option value="Adjudant">Adjudant</option>
+          <option value="Adjudant-Chef">Adjudant-Chef</option>
+          <option value="Lieutenant">Lieutenant</option>
+          <option value="Capitaine">Capitaine</option>
+          <option value="Commandant">Commandant</option>
+          <option value="Lieutenant-Colonel">Lieutenant-Colonel</option>
+          <option value="Colonel">Colonel</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Ton pseudo</label>
+        <input type="text" id="sig_pseudo" placeholder="Ton pseudo" oninput="updateProgress()" />
+      </div>
+      <div class="champ">
+        <label>Ta fonction</label>
+        <select id="sig_fonction">
+          <option value="Chef de Section">Chef de Section</option>
+          <option value="Chef de Centre Adjoint">Chef de Centre Adjoint</option>
+          <option value="Chef de Centre">Chef de Centre</option>
+          <option value="Responsable Ressources Humaines">Responsable Ressources Humaines</option>
+          <option value="Responsable Ressources Humaines Adjoint">Responsable Ressources Humaines Adjoint</option>
+          <option value="Chef de Groupement">Chef de Groupement</option>
+          <option value="Chef de Groupement Adjoint">Chef de Groupement Adjoint</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Caserne / Groupement</label>
+        <select id="sig_caserne">
+          <optgroup label="--- SDIS 13 — Bouches-du-Rhône ---">
+            <option value="CIS Alpilles-Durance|13">CIS Alpilles-Durance</option>
+            <option value="CIS Chateaurenard|13">CIS Chateaurenard</option>
+            <option value="CIS Eyguières|13">CIS Eyguières</option>
+            <option value="CIS Istres|13">CIS Istres</option>
+            <option value="CIS Lambesc|13">CIS Lambesc</option>
+            <option value="CIS Mallemort|13">CIS Mallemort</option>
+            <option value="CIS Salon-de-Provence|13">CIS Salon-de-Provence</option>
+            <option value="CIS Vallée des Baux|13">CIS Vallée des Baux</option>
+            <option value="Groupement Centre|13">Groupement Centre</option>
+            <option value="Groupement Nord|13">Groupement Nord</option>
+          </optgroup>
+          <optgroup label="--- SDIS 67 — Bas-Rhin ---">
+            <option value="CIS Bischwiller|67">CIS Bischwiller</option>
+            <option value="CIS Molsheim|67">CIS Molsheim</option>
+            <option value="CIS Petersbach|67">CIS Petersbach</option>
+            <option value="CIS Saverne|67">CIS Saverne</option>
+            <option value="CIS Strasbourg Ouest|67">CIS Strasbourg Ouest</option>
+            <option value="CIS Truchtersheim|67">CIS Truchtersheim</option>
+            <option value="CIS Val de Moder|67">CIS Val de Moder</option>
+            <option value="CIS Wasselonne|67">CIS Wasselonne</option>
+            <option value="Groupement Nord|67">Groupement Nord</option>
+            <option value="Groupement Sud|67">Groupement Sud</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+
+    <button onclick="genererNotation()">📄 Générer l'avis</button>
+    <button type="button" onclick="resetNotation()" style="background-color:#30363d; margin-top:10px;">🔄 Réinitialiser</button>
+  </div>
+
+  <div id="resultat" class="formulaire-cache"></div>
+
+  <p class="signature-auteur">Par Ripper</p>
+  <div id="toast-copie" class="toast"></div>
+
+</div>
+
+<script src="script-notation.js?v=1"></script>
