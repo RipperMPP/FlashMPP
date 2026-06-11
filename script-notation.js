@@ -131,10 +131,10 @@ function genererNotation() {
   }
 
   texte += `${article}${grade} ${nom} obtient la note globale de ${total}/20 — ${mention}.\n\n`;
-  texte += `📡 Communication : ${notes.communication}/5 — ${commentaires.communication[notes.communication]}\n`;
-  texte += `📅 Présence : ${notes.presence}/5 — ${commentaires.presence[notes.presence]}\n`;
-  texte += `💼 Travail Fourni / Investissement : ${notes.travail}/5 — ${commentaires.travail[notes.travail]}\n`;
-  texte += `🤝 Comportement / Savoir-être : ${notes.comportement}/5 — ${commentaires.comportement[notes.comportement]}\n`;
+  texte += ` Communication : ${notes.communication}/5 — ${commentaires.communication[notes.communication]}\n`;
+  texte += ` Présence : ${notes.presence}/5 — ${commentaires.presence[notes.presence]}\n`;
+  texte += ` Travail Fourni / Investissement : ${notes.travail}/5 — ${commentaires.travail[notes.travail]}\n`;
+  texte += ` Comportement / Savoir-être : ${notes.comportement}/5 — ${commentaires.comportement[notes.comportement]}\n`;
   texte += `\n[Votre commentaire personnalisé ici]\n`;
 
   if (opt_sig) {
