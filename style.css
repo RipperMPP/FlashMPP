@@ -169,9 +169,10 @@ button:hover {
 /* ── Grille de Modules (Cartes) ── */
 .modules {
   display: flex;
-  flex-wrap: wrap; /* Évite que les cartes s'écrasent sur une seule ligne */
+  flex-wrap: wrap; /* Permet de passer à la ligne proprement si l'écran est trop petit */
   gap: 20px;
   justify-content: center;
+  align-items: stretch; /* Force toutes les cartes d'une même ligne à avoir strictement la même hauteur */
 }
 
 .card {
@@ -179,12 +180,15 @@ button:hover {
   border: 1px solid #30363d;
   border-radius: 12px;
   padding: 30px;
-  width: 250px; /* Largeur fixe ou min-width pour l'alignement */
+  width: 250px; 
   text-align: center;
+  
+  /* L'astuce Flexbox verticale pour la carte */
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Aligne le bouton en bas automatiquement */
-  transition: border-color 0.3s ease, transform 0.3s ease; /* Transition de base */
+  justify-content: space-between; 
+  
+  transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
 .card:hover {
@@ -192,15 +196,18 @@ button:hover {
   transform: translateY(-5px);
 }
 
+/* Ce bloc va occuper tout l'espace disponible et pousser le bouton au fond */
 .card-content {
-  flex-grow: 1; /* Occupe l'espace restant pour pousser le bouton */
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; 
 }
 
 .card-link {
   display: block;
   text-decoration: none;
   width: 100%;
+  margin-top: auto; /* Sécurité additionnelle pour forcer l'alignement bas */
 }
 
 .icon {
