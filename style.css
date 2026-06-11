@@ -12,9 +12,9 @@ body {
 }
 
 .container {
-  max-width: 850px;
+  max-width: 950px;
   margin: 0 auto;
-  padding: 40px 40px;
+  padding: 40px;
 }
 
 /* ── Typographie & Header ── */
@@ -179,15 +179,13 @@ button:hover {
   background-color: #161b22;
   border: 1px solid #30363d;
   border-radius: 12px;
-  padding: 30px;
-  width: 250px; 
+  padding: 30px;  
+  flex: 0 1 calc(33.333% - 14px); 
+  min-width: 240px; /* Sécurité pour les petits écrans */
   text-align: center;
-  
-  /* L'astuce Flexbox verticale pour la carte */
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
-  
+  justify-content: space-between;
   transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
