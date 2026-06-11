@@ -1,3 +1,4 @@
+/* ── Reset & Variables globales ── */
 * {
   margin: 0;
   padding: 0;
@@ -16,6 +17,7 @@ body {
   padding: 40px 40px;
 }
 
+/* ── Typographie & Header ── */
 header {
   text-align: center;
   margin-bottom: 40px;
@@ -32,6 +34,7 @@ header p {
   font-size: 15px;
 }
 
+/* ── Formulaires & Utilitaires ── */
 .formulaire-visible {
   background-color: #161b22;
   border: 1px solid #30363d;
@@ -39,11 +42,7 @@ header p {
   padding: 30px;
 }
 
-.formulaire-cache {
-  display: none;
-}
-
-.cache {
+.formulaire-cache, .cache {
   display: none;
 }
 
@@ -87,6 +86,7 @@ header p {
   resize: vertical;
 }
 
+/* ── Boutons ── */
 button {
   background-color: #e63946;
   color: white;
@@ -97,13 +97,42 @@ button {
   cursor: pointer;
   width: 100%;
   margin-top: 10px;
+  transition: background-color 0.2s ease; /* Transition placée ici */
 }
 
 button:hover {
   background-color: #c1121f;
-  transition: all 0.2s ease;
 }
 
+.btn-disabled {
+  background-color: #30363d;
+  color: #8b949e;
+  cursor: not-allowed;
+  width: 100%;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  font-size: 15px;
+}
+
+.btn-retour {
+  display: inline-block;
+  background-color: #30363d;
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-retour:hover {
+  background-color: #e63946;
+  color: white;
+}
+
+/* ── Zone de Résultat ── */
 #resultat {
   margin-top: 30px;
   background-color: #161b22;
@@ -137,9 +166,12 @@ button:hover {
   background-color: #2ea043;
 }
 
+/* ── Grille de Modules (Cartes) ── */
 .modules {
   display: flex;
+  flex-wrap: wrap; /* Évite que les cartes s'écrasent sur une seule ligne */
   gap: 20px;
+  justify-content: center;
 }
 
 .card {
@@ -147,14 +179,28 @@ button:hover {
   border: 1px solid #30363d;
   border-radius: 12px;
   padding: 30px;
-  flex: 1;
+  width: 250px; /* Largeur fixe ou min-width pour l'alignement */
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Aligne le bouton en bas automatiquement */
+  transition: border-color 0.3s ease, transform 0.3s ease; /* Transition de base */
 }
 
 .card:hover {
   border-color: #e63946;
   transform: translateY(-5px);
-  transition: all 0.3s ease;
+}
+
+.card-content {
+  flex-grow: 1; /* Occupe l'espace restant pour pousser le bouton */
+  margin-bottom: 15px;
+}
+
+.card-link {
+  display: block;
+  text-decoration: none;
+  width: 100%;
 }
 
 .icon {
@@ -174,68 +220,95 @@ button:hover {
   margin-bottom: 20px;
 }
 
-.card a {
-  text-decoration: none;
-}
-
-.btn-disabled {
-  background-color: #30363d;
-  color: #8b949e;
-  cursor: not-allowed;
-  width: 100%;
-  padding: 12px 28px;
-  border-radius: 8px;
-  border: none;
-  font-size: 15px;
-}
-
-.btn-retour {
-  display: inline-block;
-  background-color: #30363d;
-  color: white;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 14px;
+/* ── Module Notation ── */
+.critere {
   margin-bottom: 20px;
-  transition: background-color 0.2s;
 }
 
-.btn-retour:hover {
-  background-color: #e63946;
+.critere-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.critere-label {
+  color: #e6edf3;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.critere-score {
+  color: #e63946;
+  font-size: 14px;
+  font-weight: bold;
+  min-width: 40px;
+  text-align: right;
+}
+
+.note-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.note-btn {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+  background-color: #21262d;
+  color: #8b949e;
+  cursor: pointer;
+  margin: 0;
+  width: auto;
+  transition: all 0.15s ease;
+}
+
+.note-btn:hover {
+  background-color: #30363d;
   color: white;
 }
 
-.signature-auteur {
+.note-btn.selected {
+  background-color: #e63946;
+  border-color: #e63946;
+  color: white;
+}
+
+.note-globale {
   text-align: right;
-  color: #30363d;
-  font-size: 11px;
-  margin-top: 40px;
-}
-
-.compteur {
-  text-align: center;
-  margin-top: 30px;
   color: #8b949e;
-  font-size: 13px;
+  font-size: 14px;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid #30363d;
 }
 
-.compteur strong {
+.note-globale strong {
   color: #e63946;
+  font-size: 22px;
 }
-.copie-item + .copie-item {
-  border-top: 1px solid #30363d;
-  margin-top: 20px;
-  padding-top: 20px;
+
+.texte-editable {
+  width: 100%;
+  min-height: 260px;
+  resize: vertical;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.7;
 }
 
 /* ── Checkboxes options ── */
 .champ-toggle {
+  display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
 }
+
 .toggle-label {
   display: flex;
   align-items: center;
@@ -245,12 +318,14 @@ button:hover {
   cursor: pointer;
   user-select: none;
 }
+
 .toggle-label input[type="checkbox"] {
   width: 16px;
   height: 16px;
   accent-color: #e63946;
   cursor: pointer;
 }
+
 .toggle-label code {
   background: #21262d;
   border: 1px solid #30363d;
@@ -277,6 +352,7 @@ button:hover {
   z-index: 9999;
   white-space: nowrap;
 }
+
 .toast.visible {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
@@ -286,6 +362,7 @@ button:hover {
 .progress-wrap {
   margin-bottom: 28px;
 }
+
 .progress-label {
   display: flex;
   justify-content: space-between;
@@ -293,6 +370,7 @@ button:hover {
   font-size: 12px;
   margin-bottom: 7px;
 }
+
 .progress-track {
   background: #21262d;
   border-radius: 99px;
@@ -300,10 +378,36 @@ button:hover {
   overflow: hidden;
   border: 1px solid #30363d;
 }
+
 .progress-fill {
   height: 100%;
   border-radius: 99px;
   background: linear-gradient(90deg, #e63946, #ff6b6b);
   transition: width 0.4s ease, background 0.4s ease;
   width: 0%;
+}
+
+/* ── Footer & Compteur ── */
+.copie-item + .copie-item {
+  border-top: 1px solid #30363d;
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+.signature-auteur {
+  text-align: right;
+  color: #30363d;
+  font-size: 11px;
+  margin-top: 40px;
+}
+
+.compteur {
+  text-align: center;
+  margin-top: 30px;
+  color: #8b949e;
+  font-size: 13px;
+}
+
+.compteur strong {
+  color: #e63946;
 }
