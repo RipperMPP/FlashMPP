@@ -17,7 +17,7 @@ const commentaires = {
     "La communication est excellente, tant avec la hiérarchie qu'avec l'ensemble du personnel du CIS.",
   ],
   presence: [
-    "Aucune présence constatée ce mois-ci.",
+    "Aucune présence constatée.",
     "La présence est très insuffisante, quasi-absente.",
     "La présence est insuffisante, des efforts sont nécessaires.",
     "La présence est correcte mais irrégulière.",
@@ -25,7 +25,7 @@ const commentaires = {
     "La présence est exemplaire et quotidienne, un point très positif.",
   ],
   travail: [
-    "Aucun travail fourni ni investissement constaté.",
+    "Aucun travail fourni, ni investissement constaté.",
     "Le travail fourni est très insuffisant et l'investissement est quasi nul.",
     "Le travail fourni et l'investissement sont insuffisants, des efforts sont attendus.",
     "Le travail fourni et l'investissement sont corrects et dans les attentes.",
