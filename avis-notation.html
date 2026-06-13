@@ -4,15 +4,24 @@
 
   <a href="index.html" class="btn-retour">← Retour</a>
 <head>
-    <title>FlashMPP - Notation</title>
+  <title>FlashMPP - Notation</title>
 </head>
   <header>
     <h1>⚡ FlashMPP</h1>
-    <p>Générateur d'avis - MonPompier.com</p>
+    <p>Générateur d'avis administratif rapide</p>
   </header>
 
   <div class="formulaire-visible">
 
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Progression</span>
+        <span id="progress-pct">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
 
     <h2>⭐ Avis de Notation</h2>
 
@@ -132,6 +141,10 @@
       <div class="champ">
         <label>Ton grade</label>
         <select id="sig_grade">
+          <option value="Sapeur">Sapeur</option>
+          <option value="Caporal">Caporal</option>
+          <option value="Caporal-Chef">Caporal-Chef</option>
+          <option value="Sergent">Sergent</option>
           <option value="Sergent-Chef">Sergent-Chef</option>
           <option value="Adjudant">Adjudant</option>
           <option value="Adjudant-Chef">Adjudant-Chef</option>
@@ -149,14 +162,29 @@
       <div class="champ">
         <label>Ta fonction</label>
         <select id="sig_fonction">
-          <option value="Aucun">Aucun</option>
-          <option value="Chef de Section">Chef de Section</option>
-          <option value="Chef de Centre Adjoint">Chef de Centre Adjoint</option>
-          <option value="Chef de Centre">Chef de Centre</option>
-          <option value="Responsable Ressources Humaines">Responsable Ressources Humaines</option>
-          <option value="Responsable Ressources Humaines Adjoint">Responsable Ressources Humaines Adjoint</option>
-          <option value="Chef de Groupement">Chef de Groupement</option>
-          <option value="Chef de Groupement Adjoint">Chef de Groupement Adjoint</option>
+          <option value="">Aucun</option>
+          <optgroup label="--- Caserne ---">
+            <option value="Responsable Matériel">Responsable Matériel</option>
+            <option value="Responsable Pharmacie">Responsable Pharmacie</option>
+            <option value="Responsable Habillement">Responsable Habillement</option>
+            <option value="Responsable Véhicules">Responsable Véhicules</option>
+            <option value="Chef de Section">Chef de Section</option>
+            <option value="Responsable Formation Caserne">Responsable Formation Caserne</option>
+            <option value="Chef de Centre Adjoint">Chef de Centre Adjoint</option>
+            <option value="Chef de Centre">Chef de Centre</option>
+          </optgroup>
+          <optgroup label="--- Groupement ---">
+            <option value="Chef de Groupement Adjoint">Chef de Groupement Adjoint</option>
+            <option value="Chef de Groupement">Chef de Groupement</option>
+            <option value="Responsable Formation Adjoint">Responsable Formation Adjoint</option>
+            <option value="Responsable Formation">Responsable Formation</option>
+            <option value="Responsable Opérations-Prévisions Adjoint">Responsable Opérations-Prévisions Adjoint</option>
+            <option value="Responsable Opérations-Prévisions">Responsable Opérations-Prévisions</option>
+            <option value="Responsable RH Adjoint">Responsable RH Adjoint</option>
+            <option value="Responsable des Ressources Humaines">Responsable des Ressources Humaines</option>
+            <option value="Responsable Technique Adjoint">Responsable Technique Adjoint</option>
+            <option value="Responsable Technique">Responsable Technique</option>
+          </optgroup>
         </select>
       </div>
       <div class="champ">

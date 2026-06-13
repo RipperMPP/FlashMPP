@@ -101,7 +101,8 @@ function genererNotation() {
   const nom         = document.getElementById("nom").value.trim();
   const sig_grade   = document.getElementById("sig_grade").value;
   const sig_pseudo  = document.getElementById("sig_pseudo").value.trim();
-  const sig_fonction= document.getElementById("sig_fonction").value;
+  const sig_fonctionRaw = document.getElementById("sig_fonction").value;
+  const sig_fonction    = sig_fonctionRaw ? `, ${sig_fonctionRaw}` : "";
   const caserneBrute= document.getElementById("sig_caserne").value;
   const sig_caserne = caserneBrute.split("|")[0];
   const sig_sdis    = caserneBrute.split("|")[1];
@@ -131,14 +132,14 @@ function genererNotation() {
   }
 
   texte += `${article}${grade} ${nom} obtient la note globale de ${total}/20 — ${mention}.\n\n`;
-  texte += ` Communication : ${notes.communication}/5 — ${commentaires.communication[notes.communication]}\n`;
-  texte += ` Présence : ${notes.presence}/5 — ${commentaires.presence[notes.presence]}\n`;
-  texte += ` Travail Fourni / Investissement : ${notes.travail}/5 — ${commentaires.travail[notes.travail]}\n`;
-  texte += ` Comportement / Savoir-être : ${notes.comportement}/5 — ${commentaires.comportement[notes.comportement]}\n`;
+  texte += `📡 Communication : ${notes.communication}/5 — ${commentaires.communication[notes.communication]}\n`;
+  texte += `📅 Présence : ${notes.presence}/5 — ${commentaires.presence[notes.presence]}\n`;
+  texte += `💼 Travail Fourni / Investissement : ${notes.travail}/5 — ${commentaires.travail[notes.travail]}\n`;
+  texte += `🤝 Comportement / Savoir-être : ${notes.comportement}/5 — ${commentaires.comportement[notes.comportement]}\n`;
   texte += `\n[Votre commentaire personnalisé ici]\n`;
 
   if (opt_sig) {
-    texte += `\n- Le ${dateComplete} - ${sig_grade} ${sig_pseudo}, ${sig_fonction}, ${sig_caserne}, SDIS ${sig_sdis}`;
+    texte += `\n- Le ${dateComplete} - ${sig_grade} ${sig_pseudo}${sig_fonction}, ${sig_caserne}, SDIS ${sig_sdis}`;
   }
 
   const resultat = document.getElementById("resultat");
