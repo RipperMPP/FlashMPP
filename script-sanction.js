@@ -238,12 +238,13 @@ ${copiesStr}[/couleur] [/b] [/droite]`;
   }
 
   // Corps
+  const suitePhrase = niveau !== "avert4"
+    ? `Par ailleurs, en cas de nouveau manquement aux NDS en vigueur, la procédure continuera avec [couleur=red]${niveauSuivant}[/couleur], dans un délai de 7 jours.\nNous restons à votre disposition pour échanger et vous conseiller afin d'éviter une prochaine sanction.\n`
+    : "";
   const corps = `Bonjour,
 Le [b] [i]${dateFormatee}[/i] [/b], vous êtes sanctionné(e) d'un ${niveauNom.toLowerCase()} pour ${motifsTexte[motif]}.
 ${motifsCorps[motif]}
-${ndsBloc}Par ailleurs, en cas de nouveau manquement aux NDS en vigueur, la procédure continuera avec [couleur=red]${niveauSuivant}[/couleur], dans un délai de 7 jours.
-Nous restons à votre disposition pour échanger et vous conseiller afin d'éviter une prochaine sanction.
-Cordialement,`;
+${ndsBloc}${suitePhrase}Cordialement,`;
 
   // Assemblage BBCode
   const bbcode = `[centre] [h1] [couleur=red] [s]${niveauNom}[/s] [/couleur] [/h1] [/centre]
