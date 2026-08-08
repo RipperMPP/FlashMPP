@@ -118,8 +118,7 @@ function supprimerCopie() {
 function genererSanction() {
   const niveau        = document.getElementById("niveau_sanction").value;
   const motif         = document.getElementById("motif").value;
-  const motif_court   = document.getElementById("motif_autre_court").value.trim();
-  const motif_detail  = document.getElementById("motif_autre_detail").value.trim();
+  const motif_autre_texte = document.getElementById("motif_autre_texte").value.trim();
   const date_sanction = document.getElementById("date_sanction").value;
   const date_prec     = document.getElementById("date_precedente").value;
   const nds_titre     = document.getElementById("nds_titre").value.trim();
@@ -141,10 +140,6 @@ function genererSanction() {
 
   if (!dest_pseudo || !sig_pseudo || !date_sanction) {
     afficherToast("⚠️ Pseudo destinataire, émetteur et date requis.");
-    return;
-  }
-  if (motif === "autre" && !motif_court) {
-    afficherToast("⚠️ Merci de préciser le motif libre.");
     return;
   }
 
@@ -180,7 +175,7 @@ function genererSanction() {
     comportement: "comportement inapproprié au sein du CIS",
     statistiques: "statistiques inférieures à 10%",
     epi:          "attribution d'EPI sans demande de renouvellement préalable",
-    autre:        motif_court,
+    autre:        "motif libre",
   };
   const motifsCorps = {
     planning:     "En effet, vous n'avez pas débloqué votre planning dans les délais prévus et ceux malgré une relance amicale de votre hiérarchie.",
@@ -191,7 +186,7 @@ function genererSanction() {
     comportement: "En effet, votre comportement au sein du CIS n'est pas en adéquation avec les règles en vigueur et les valeurs attendues de tout agent.",
     statistiques: "En effet, vos statistiques sont inférieures à 10% ce mois-ci, ce qui est en dessous du seuil minimum requis par les NDS en vigueur.",
     epi:          "En effet, vous avez obtenu des EPI sans avoir effectué de demande de renouvellement, contrairement à la procédure en vigueur.",
-    autre:        motif_detail || "",
+    autre:        motif_autre_texte,
   };
 
   // Destinataire
@@ -302,9 +297,8 @@ function updateProgress() {
 function resetSanction() {
   document.getElementById("niveau_sanction").selectedIndex = 0;
   document.getElementById("motif").selectedIndex           = 0;
+  document.getElementById("motif_autre_texte").value      = "";
   document.getElementById("bloc_motif_autre").className   = "champ formulaire-cache";
-  document.getElementById("motif_autre_court").value      = "";
-  document.getElementById("motif_autre_detail").value     = "";
   document.getElementById("date_sanction").value          = "";
   document.getElementById("date_precedente").value        = "";
   document.getElementById("nds_titre").value              = "";
