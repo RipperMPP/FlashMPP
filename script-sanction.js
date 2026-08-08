@@ -31,6 +31,7 @@ const FONCTIONS_OPTIONS = `
     <option value="Directeur Ressources Humaines">Directeur Ressources Humaines</option>
     <option value="Directeur Départemental Adjoint">Directeur Départemental Adjoint</option>
     <option value="Directeur Départemental">Directeur Départemental</option>
+  <optgroup label="--- État-Major ---">
     <option value="CASDIS">CASDIS</option>
   </optgroup>`;
 
@@ -58,6 +59,12 @@ const CASERNES_OPTIONS = `
     <option value="CIS Wasselonne">CIS Wasselonne</option>
     <option value="Groupement Nord">Groupement Nord</option>
     <option value="Groupement Sud">Groupement Sud</option>
+  </optgroup>
+  <optgroup label="--- Autre ---">
+    <option value="Direction SDIS 13">Direction SDIS 13</option>
+    <option value="Direction SDIS 67">Direction SDIS 67</option>
+  <optgroup label="--- État-Major ---">
+    <option value="CASDIS">CASDIS</option>
   </optgroup>`;
 
 const GRADES_OPTIONS = `
