@@ -1,31 +1,107 @@
 let nbCopies = 1;
 
+// ── Snippets HTML réutilisables ──────────────────────────────────────────────
+
+const FONCTIONS_OPTIONS = `
+  <option value="">Aucune</option>
+  <optgroup label="--- Caserne ---">
+    <option value="Responsable Pharmacie">Responsable Pharmacie</option>
+    <option value="Responsable Matériel">Responsable Matériel</option>
+    <option value="Responsable Habillement">Responsable Habillement</option>
+    <option value="Responsable Véhicules">Responsable Véhicules</option>
+    <option value="Chef de Section">Chef de Section</option>
+    <option value="Responsable Formation Caserne">Responsable Formation Caserne</option>
+    <option value="Chef de Centre Adjoint">Chef de Centre Adjoint</option>
+    <option value="Chef de Centre">Chef de Centre</option>
+  </optgroup>
+  <optgroup label="--- Groupement ---">
+    <option value="Responsable Technique Adjoint">Responsable Technique Adjoint</option>
+    <option value="Responsable Technique">Responsable Technique</option>
+    <option value="Responsable RH Adjoint">Responsable RH Adjoint</option>
+    <option value="Responsable des Ressources Humaines">Responsable des Ressources Humaines</option>
+    <option value="Responsable Opérations-Prévisions Adjoint">Responsable Opérations-Prévisions Adjoint</option>
+    <option value="Responsable Opérations-Prévisions">Responsable Opérations-Prévisions</option>
+    <option value="Responsable Formation Adjoint">Responsable Formation Adjoint</option>
+    <option value="Responsable Formation">Responsable Formation</option>
+    <option value="Chef de Groupement Adjoint">Chef de Groupement Adjoint</option>
+    <option value="Chef de Groupement">Chef de Groupement</option>
+  </optgroup>
+  <optgroup label="--- Direction ---">
+    <option value="Directeur Ressources Humaines Adjoint">Directeur Ressources Humaines Adjoint</option>
+    <option value="Directeur Ressources Humaines">Directeur Ressources Humaines</option>
+    <option value="Directeur Départemental Adjoint">Directeur Départemental Adjoint</option>
+    <option value="Directeur Départemental">Directeur Départemental</option>
+    <option value="CASDIS">CASDIS</option>
+  </optgroup>`;
+
+const CASERNES_OPTIONS = `
+  <optgroup label="--- SDIS 13 — Bouches-du-Rhône ---">
+    <option value="CIS Alpilles-Durance">CIS Alpilles-Durance</option>
+    <option value="CIS Chateaurenard">CIS Chateaurenard</option>
+    <option value="CIS Eyguières">CIS Eyguières</option>
+    <option value="CIS Istres">CIS Istres</option>
+    <option value="CIS Lambesc">CIS Lambesc</option>
+    <option value="CIS Mallemort">CIS Mallemort</option>
+    <option value="CIS Salon-de-Provence">CIS Salon-de-Provence</option>
+    <option value="CIS Vallée des Baux">CIS Vallée des Baux</option>
+    <option value="Groupement Centre">Groupement Centre</option>
+    <option value="Groupement Nord">Groupement Nord</option>
+  </optgroup>
+  <optgroup label="--- SDIS 67 — Bas-Rhin ---">
+    <option value="CIS Bischwiller">CIS Bischwiller</option>
+    <option value="CIS Molsheim">CIS Molsheim</option>
+    <option value="CIS Petersbach">CIS Petersbach</option>
+    <option value="CIS Saverne">CIS Saverne</option>
+    <option value="CIS Strasbourg Ouest">CIS Strasbourg Ouest</option>
+    <option value="CIS Truchtersheim">CIS Truchtersheim</option>
+    <option value="CIS Val de Moder">CIS Val de Moder</option>
+    <option value="CIS Wasselonne">CIS Wasselonne</option>
+    <option value="Groupement Nord">Groupement Nord</option>
+    <option value="Groupement Sud">Groupement Sud</option>
+  </optgroup>`;
+
+const GRADES_OPTIONS = `
+  <option value="Sapeur|2">Sapeur</option>
+  <option value="Caporal|3">Caporal</option>
+  <option value="Caporal-Chef|4">Caporal-Chef</option>
+  <option value="Sergent|5">Sergent</option>
+  <option value="Sergent-Chef|6">Sergent-Chef</option>
+  <option value="Adjudant|7">Adjudant</option>
+  <option value="Adjudant-Chef|8">Adjudant-Chef</option>
+  <option value="Lieutenant|9">Lieutenant</option>
+  <option value="Capitaine|10">Capitaine</option>
+  <option value="Commandant|11">Commandant</option>
+  <option value="Lieutenant-Colonel|12">Lieutenant-Colonel</option>
+  <option value="Colonel|13">Colonel</option>`;
+
+// ── Toggle motif autre ───────────────────────────────────────────────────────
+
+function toggleMotifAutre() {
+  const val = document.getElementById("motif").value;
+  document.getElementById("bloc_motif_autre").className =
+    val === "autre" ? "champ formulaire-visible" : "champ formulaire-cache";
+}
+
+// ── Ajout / suppression de copies ───────────────────────────────────────────
+
 function ajouterCopie() {
   const liste = document.getElementById("liste_copies");
-  const div = document.createElement("div");
+  const div   = document.createElement("div");
   div.className = "copie-item";
   div.id = "copie_" + nbCopies;
   div.innerHTML = `
     <div class="champ"><label>Grade</label>
-      <select class="copie_grade">
-        <option value="Sapeur|2">Sapeur</option>
-        <option value="Caporal|3">Caporal</option>
-        <option value="Caporal-Chef|4">Caporal-Chef</option>
-        <option value="Sergent|5">Sergent</option>
-        <option value="Sergent-Chef|6">Sergent-Chef</option>
-        <option value="Adjudant|7">Adjudant</option>
-        <option value="Adjudant-Chef|8">Adjudant-Chef</option>
-        <option value="Lieutenant|9">Lieutenant</option>
-        <option value="Capitaine|10">Capitaine</option>
-        <option value="Commandant|11">Commandant</option>
-        <option value="Lieutenant-Colonel|12">Lieutenant-Colonel</option>
-        <option value="Colonel|13">Colonel</option>
-      </select>
+      <select class="copie_grade">${GRADES_OPTIONS}</select>
     </div>
-    <div class="champ"><label>Pseudo</label><input type="text" class="copie_pseudo" placeholder="Pseudo" /></div>
-    <div class="champ"><label>Fonction</label><input type="text" class="copie_fonction" placeholder="Ex: Chef de Centre Adjoint" /></div>
-    <div class="champ"><label>Caserne</label><input type="text" class="copie_caserne" placeholder="Ex: CIS Lambesc" /></div>
-  `;
+    <div class="champ"><label>Pseudo</label>
+      <input type="text" class="copie_pseudo" placeholder="Pseudo" />
+    </div>
+    <div class="champ"><label>Fonction</label>
+      <select class="copie_fonction">${FONCTIONS_OPTIONS}</select>
+    </div>
+    <div class="champ"><label>Caserne / Groupement</label>
+      <select class="copie_caserne">${CASERNES_OPTIONS}</select>
+    </div>`;
   liste.appendChild(div);
   nbCopies++;
 }
@@ -37,27 +113,38 @@ function supprimerCopie() {
   if (el) el.remove();
 }
 
+// ── Génération ───────────────────────────────────────────────────────────────
+
 function genererSanction() {
   const niveau        = document.getElementById("niveau_sanction").value;
   const motif         = document.getElementById("motif").value;
+  const motif_court   = document.getElementById("motif_autre_court").value.trim();
+  const motif_detail  = document.getElementById("motif_autre_detail").value.trim();
   const date_sanction = document.getElementById("date_sanction").value;
   const date_prec     = document.getElementById("date_precedente").value;
-  const nds_texte     = document.getElementById("nds_texte").value;
+  const nds_titre     = document.getElementById("nds_titre").value.trim();
+  const nds_texte     = document.getElementById("nds_texte").value.trim();
   const dest_brut     = document.getElementById("dest_grade").value;
   const dest_grade    = dest_brut.split("|")[0];
   const dest_num      = dest_brut.split("|")[1];
-  const dest_pseudo   = document.getElementById("dest_pseudo").value;
+  const dest_pseudo   = document.getElementById("dest_pseudo").value.trim();
   const dest_fonction = document.getElementById("dest_fonction").value;
+  const dest_caserne  = document.getElementById("dest_caserne").value;
   const sig_brut      = document.getElementById("sig_grade").value;
   const sig_grade     = sig_brut.split("|")[0];
   const sig_num       = sig_brut.split("|")[1];
-  const sig_pseudo    = document.getElementById("sig_pseudo").value;
-  const sig_fonction  = document.getElementById("sig_fonction").value;
+  const sig_pseudo    = document.getElementById("sig_pseudo").value.trim();
+  const sig_fonctionRaw = document.getElementById("sig_fonction").value;
+  const sig_fonction    = sig_fonctionRaw ? ` - ${sig_fonctionRaw}` : "";
   const caserne_brut  = document.getElementById("sig_caserne").value;
   const sig_caserne   = caserne_brut.split("|")[0];
 
   if (!dest_pseudo || !sig_pseudo || !date_sanction) {
-    alert("⚠️ Merci de remplir le pseudo destinataire, émetteur et la date.");
+    afficherToast("⚠️ Pseudo destinataire, émetteur et date requis.");
+    return;
+  }
+  if (motif === "autre" && !motif_court) {
+    afficherToast("⚠️ Merci de préciser le motif libre.");
     return;
   }
 
@@ -80,7 +167,6 @@ function genererSanction() {
     avert3: "un Avertissement de niveau 4",
     avert4: "un licenciement",
   };
-
   const niveauNom     = niveauxNoms[niveau];
   const niveauSuivant = niveauxSuivants[niveau];
 
@@ -94,8 +180,8 @@ function genererSanction() {
     comportement: "comportement inapproprié au sein du CIS",
     statistiques: "statistiques inférieures à 10%",
     epi:          "attribution d'EPI sans demande de renouvellement préalable",
+    autre:        motif_court,
   };
-
   const motifsCorps = {
     planning:     "En effet, vous n'avez pas débloqué votre planning dans les délais prévus et ceux malgré une relance amicale de votre hiérarchie.",
     poste:        "En effet, votre poste n'a pas été tenu correctement ce mois-ci, malgré les rappels effectués par votre hiérarchie.",
@@ -105,11 +191,12 @@ function genererSanction() {
     comportement: "En effet, votre comportement au sein du CIS n'est pas en adéquation avec les règles en vigueur et les valeurs attendues de tout agent.",
     statistiques: "En effet, vos statistiques sont inférieures à 10% ce mois-ci, ce qui est en dessous du seuil minimum requis par les NDS en vigueur.",
     epi:          "En effet, vous avez obtenu des EPI sans avoir effectué de demande de renouvellement, contrairement à la procédure en vigueur.",
+    autre:        motif_detail || "",
   };
 
   // Destinataire
   const destFonctionStr = dest_fonction ? ` - ${dest_fonction}` : "";
-  const destinataire = `[b] [s]Destinataire :[/s] [img taille=20]https://monpompier.com/templates/images/grades/svg/grade${dest_num}.svg[/img] ${dest_pseudo}${destFonctionStr} [/b]`;
+  const destinataire = `[b] [s]Destinataire :[/s] [img taille=20]https://monpompier.com/templates/images/grades/svg/grade${dest_num}.svg[/img] ${dest_pseudo}${destFonctionStr} - ${dest_caserne} [/b]`;
 
   // Date précédente
   const datePrecStr = date_prec
@@ -119,7 +206,7 @@ function genererSanction() {
 
   // Émetteur
   const emetteur = `[droite] [b] [couleur=blue] [s]Émetteur :[/s] 
-[img taille=20]https://monpompier.com/templates/images/grades/svg/grade${sig_num}.svg[/img] ${sig_pseudo} - ${sig_fonction} - ${sig_caserne}[/b] [/couleur] [/droite]`;
+[img taille=20]https://monpompier.com/templates/images/grades/svg/grade${sig_num}.svg[/img] ${sig_pseudo}${sig_fonction} - ${sig_caserne}[/b] [/couleur] [/droite]`;
 
   // Copies
   const copieItems = document.querySelectorAll(".copie-item");
@@ -127,11 +214,12 @@ function genererSanction() {
   copieItems.forEach(item => {
     const cGradeBrut = item.querySelector(".copie_grade").value;
     const cNum       = cGradeBrut.split("|")[1];
-    const cPseudo    = item.querySelector(".copie_pseudo").value;
+    const cPseudo    = item.querySelector(".copie_pseudo").value.trim();
     const cFonction  = item.querySelector(".copie_fonction").value;
     const cCaserne   = item.querySelector(".copie_caserne").value;
     if (cPseudo) {
-      copiesStr += `[img taille=20]https://monpompier.com/templates/images/grades/svg/grade${cNum}.svg[/img] ${cPseudo} - ${cFonction} - ${cCaserne}\n`;
+      const cFonctionStr = cFonction ? ` - ${cFonction}` : "";
+      copiesStr += `[img taille=20]https://monpompier.com/templates/images/grades/svg/grade${cNum}.svg[/img] ${cPseudo}${cFonctionStr} - ${cCaserne}\n`;
     }
   });
   const copies = `[droite] [b] [couleur=cyan] [s]En copies :[/s] 
@@ -141,9 +229,11 @@ ${copiesStr}[/couleur] [/b] [/droite]`;
   const objet = `[b] [s]Objet:[/s] [/b] [b] [couleur=red]${niveauNom}[/couleur] [/b]`;
 
   // NDS
-  const ndsBloc = nds_texte
-    ? `[quote=Note de Service]${nds_texte}[/quote]\n`
-    : "";
+  let ndsBloc = "";
+  if (nds_texte) {
+    const ndsLabel = nds_titre ? `Note de Service — ${nds_titre}` : "Note de Service";
+    ndsBloc = `[quote=${ndsLabel}]${nds_texte}[/quote]\n`;
+  }
 
   // Corps
   const corps = `Bonjour,
@@ -175,55 +265,86 @@ ${corps}`;
   incrementerCompteur();
 }
 
+// ── Copie ────────────────────────────────────────────────────────────────────
+
 function copierTexte() {
   const texte = document.getElementById("corps-sanction").innerText;
-  navigator.clipboard.writeText(texte).then(() => alert("✅ Texte copié !"));
+  navigator.clipboard.writeText(texte).then(() => afficherToast("✅ Texte copié !"));
 }
+
+function afficherToast(msg) {
+  const t = document.getElementById("toast-copie");
+  t.textContent = msg;
+  t.classList.add("visible");
+  setTimeout(() => t.classList.remove("visible"), 2000);
+}
+
+// ── Progression ──────────────────────────────────────────────────────────────
+
+function updateProgress() {
+  const steps = [
+    !!document.getElementById("date_sanction").value,
+    !!document.getElementById("dest_pseudo").value.trim(),
+    !!document.getElementById("sig_pseudo").value.trim(),
+  ];
+  const done = steps.filter(Boolean).length;
+  const pct  = Math.round((done / steps.length) * 100);
+  const fill = document.getElementById("progress-fill");
+  fill.style.width      = pct + "%";
+  fill.style.background = pct === 100
+    ? "#238636"
+    : "linear-gradient(90deg, #e63946, #ff6b6b)";
+  document.getElementById("progress-pct").textContent = pct + "%";
+}
+
+// ── Reset ────────────────────────────────────────────────────────────────────
 
 function resetSanction() {
   document.getElementById("niveau_sanction").selectedIndex = 0;
-  document.getElementById("motif").selectedIndex = 0;
-  document.getElementById("date_sanction").value = "";
-  document.getElementById("date_precedente").value = "";
-  document.getElementById("nds_texte").value = "";
-  document.getElementById("dest_grade").selectedIndex = 0;
-  document.getElementById("dest_pseudo").value = "";
-  document.getElementById("dest_fonction").value = "";
-  document.getElementById("resultat").className = "formulaire-cache";
+  document.getElementById("motif").selectedIndex           = 0;
+  document.getElementById("bloc_motif_autre").className   = "champ formulaire-cache";
+  document.getElementById("motif_autre_court").value      = "";
+  document.getElementById("motif_autre_detail").value     = "";
+  document.getElementById("date_sanction").value          = "";
+  document.getElementById("date_precedente").value        = "";
+  document.getElementById("nds_titre").value              = "";
+  document.getElementById("nds_texte").value              = "";
+  document.getElementById("dest_grade").selectedIndex     = 0;
+  document.getElementById("dest_pseudo").value            = "";
+  document.getElementById("dest_fonction").selectedIndex  = 0;
+  document.getElementById("dest_caserne").selectedIndex   = 0;
+  document.getElementById("sig_pseudo").value             = "";
+  document.getElementById("sig_fonction").selectedIndex   = 0;
+  document.getElementById("resultat").className           = "formulaire-cache";
 
   const liste = document.getElementById("liste_copies");
   liste.innerHTML = `
     <div class="copie-item" id="copie_0">
       <div class="champ"><label>Grade</label>
-        <select class="copie_grade">
-          <option value="Sapeur|2">Sapeur</option>
-          <option value="Caporal|3">Caporal</option>
-          <option value="Caporal-Chef|4">Caporal-Chef</option>
-          <option value="Sergent|5">Sergent</option>
-          <option value="Sergent-Chef|6">Sergent-Chef</option>
-          <option value="Adjudant|7">Adjudant</option>
-          <option value="Adjudant-Chef|8">Adjudant-Chef</option>
-          <option value="Lieutenant|9">Lieutenant</option>
-          <option value="Capitaine|10">Capitaine</option>
-          <option value="Commandant|11">Commandant</option>
-          <option value="Lieutenant-Colonel|12">Lieutenant-Colonel</option>
-          <option value="Colonel|13">Colonel</option>
-        </select>
+        <select class="copie_grade">${GRADES_OPTIONS}</select>
       </div>
-      <div class="champ"><label>Pseudo</label><input type="text" class="copie_pseudo" placeholder="Pseudo" /></div>
-      <div class="champ"><label>Fonction</label><input type="text" class="copie_fonction" placeholder="Ex: Chef de Centre Adjoint" /></div>
-      <div class="champ"><label>Caserne</label><input type="text" class="copie_caserne" placeholder="Ex: CIS Lambesc" /></div>
+      <div class="champ"><label>Pseudo</label>
+        <input type="text" class="copie_pseudo" placeholder="Pseudo" />
+      </div>
+      <div class="champ"><label>Fonction</label>
+        <select class="copie_fonction">${FONCTIONS_OPTIONS}</select>
+      </div>
+      <div class="champ"><label>Caserne / Groupement</label>
+        <select class="copie_caserne">${CASERNES_OPTIONS}</select>
+      </div>
     </div>`;
   nbCopies = 1;
+  updateProgress();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+
+document.addEventListener("DOMContentLoaded", updateProgress);
 
 function incrementerCompteur() {
   const url = "https://flashmpp-default-rtdb.europe-west1.firebasedatabase.app/compteur/avis.json";
   fetch(url).then(r => r.json()).then(val => {
-    fetch(url, {
-      method: "PUT",
-      body: JSON.stringify((val || 0) + 1)
-    });
+    fetch(url, { method: "PUT", body: JSON.stringify((val || 0) + 1) });
   });
 }
