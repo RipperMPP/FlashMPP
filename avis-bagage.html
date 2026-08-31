@@ -729,6 +729,7 @@ function hasFormation(userFormations, requiredFormation) {
                 `;
             }
             resultContent.innerHTML = html + phraseHtml;
+            resultsDiv.classList.add('show');
 
             // Scroll vers les résultats
             resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
