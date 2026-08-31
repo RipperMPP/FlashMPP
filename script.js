@@ -262,11 +262,23 @@ function genererAvis() {
       mauvais:"L'équilibrage des sections est insuffisant.",
     });
 
-    ajouter("repartition_taches", {
-      equilibree:        "La répartition des tâches avec l'adjoint est équilibrée.",
-      desavantage_lui:   "La répartition des tâches est déséquilibrée avec un désavantage pour lui.",
-      desavantage_autre: "La répartition des tâches est déséquilibrée avec un désavantage pour l'autre.",
-    });
+    if (champs.includes("repartition_taches")) {
+      const elRep = document.getElementById("repartition_taches");
+      if (elRep) {
+        const repMap = poste === "chef_centre_adjoint"
+          ? {
+              equilibree:        "La répartition des tâches avec le chef de centre est équilibrée.",
+              desavantage_lui:   "La répartition des tâches est déséquilibrée avec un désavantage pour lui.",
+              desavantage_autre: "La répartition des tâches est déséquilibrée avec un désavantage pour le chef de centre.",
+            }
+          : {
+              equilibree:        "La répartition des tâches avec l'adjoint est équilibrée.",
+              desavantage_lui:   "La répartition des tâches est déséquilibrée avec un désavantage pour lui.",
+              desavantage_autre: "La répartition des tâches est déséquilibrée avec un désavantage pour l'adjoint.",
+            };
+        if (repMap[elRep.value]) parties.push(repMap[elRep.value]);
+      }
+    }
 
     if (parties.length > 0) {
       posteTexte = "Au niveau de la gestion du poste : " + parties.join(" ");
