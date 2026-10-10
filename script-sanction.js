@@ -86,7 +86,7 @@ const GRADES_OPTIONS = `
 function toggleMotifAutre() {
   const val = document.getElementById("motif").value;
   document.getElementById("bloc_motif_autre").style.display =
-    val === "autre" ? "block" : "none";
+    val === "autre" ? "flex" : "none";
 }
 
 // ── Ajout / suppression de copies ───────────────────────────────────────────
