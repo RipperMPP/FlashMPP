@@ -150,8 +150,15 @@ function genererPromotion() {
 function copierTexte() {
   const texte = document.querySelector(".texte-genere").innerText;
   navigator.clipboard.writeText(texte).then(() => {
-    alert("✅ Texte copié dans le presse-papier !");
+    afficherToast("✅ Texte copié !");
   });
+}
+
+function afficherToast(msg) {
+  const t = document.getElementById("toast-copie");
+  t.textContent = msg;
+  t.classList.add("visible");
+  setTimeout(() => t.classList.remove("visible"), 2000);
 }
 
 function resetPromotion() {
