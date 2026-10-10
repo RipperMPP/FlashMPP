@@ -256,6 +256,8 @@ ${detailBloc}${ndsBloc}${suitePhrase}Cordialement,`;
     titreEmetteur = `DIR ${caserne_brut.split("|")[1]}`;
   } else if (sig_caserne.startsWith("Groupement")) {
     titreEmetteur = `GRPT ${sig_caserne.replace("Groupement", "").trim()}`;
+  } else if (sig_caserne === "CASDIS") {
+    titreEmetteur = "CASDIS";
   } else {
     titreEmetteur = `${sig_grade} ${sig_pseudo}`;
   }
