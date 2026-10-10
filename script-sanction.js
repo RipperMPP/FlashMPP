@@ -238,8 +238,8 @@ ${copiesStr}[/couleur] [/b] [/droite]`;
     ndsBloc = `[quote=${ndsLabel}]${nds_texte}[/quote]\n`;
   }
 
-  // Détail du motif (affiché au-dessus de la note de service)
-  const detailBloc = motif_detail ? `${motif_detail}\n` : "";
+  // Manquements constatés (affichés au-dessus de la note de service)
+  const detailBloc = motif_detail ? `[b] Manquements constatés : [/b]\n${motif_detail}\n` : "";
 
   // Corps
   const suitePhrase = niveau !== "avert4"
