@@ -250,6 +250,24 @@ Le [b] [i]${dateFormatee}[/i] [/b], vous êtes sanctionné(e) d'un ${niveauNom.t
 ${motifsCorps[motif]}
 ${detailBloc}${ndsBloc}${suitePhrase}Cordialement,`;
 
+  // Titre du MP : Émetteur - Destinataire - Procédure
+  let titreEmetteur;
+  if (sig_caserne.startsWith("Direction")) {
+    titreEmetteur = `DIR ${caserne_brut.split("|")[1]}`;
+  } else if (sig_caserne.startsWith("Groupement")) {
+    titreEmetteur = `GRPT ${sig_caserne.replace("Groupement", "").trim()}`;
+  } else {
+    titreEmetteur = `${sig_grade} ${sig_pseudo}`;
+  }
+  const procedures = {
+    rappel: "Rappel Officiel",
+    avert1: "Avertissement 1",
+    avert2: "Avertissement 2",
+    avert3: "Avertissement 3",
+    avert4: "Avertissement 4",
+  };
+  const titreMP = `${titreEmetteur} - ${dest_grade} ${dest_pseudo} - ${procedures[niveau]}`;
+
   // Assemblage BBCode
   const bbcode = `[centre] [h1] [couleur=red] [s]${niveauNom}[/s] [/couleur] [/h1] [/centre]
 ${destinataire}
@@ -264,9 +282,15 @@ ${corps}`;
   resultat.className = "formulaire-visible";
   resultat.innerHTML = `
     <h2>✅ Sanction générée</h2>
+    <div class="titre-mp">
+      <span class="titre-mp-label">TITRE MP :</span>
+      <span class="titre-mp-texte" id="titre-mp"></span>
+      <button class="btn-copier-titre" onclick="copierTitre()">Copier</button>
+    </div>
     <div class="texte-genere" id="corps-sanction">${bbcode}</div>
     <button class="btn-copier" onclick="copierTexte()">📋 Copier le texte</button>
   `;
+  document.getElementById("titre-mp").textContent = titreMP;
   resultat.scrollIntoView({ behavior: "smooth" });
 
   incrementerCompteur();
@@ -277,6 +301,11 @@ ${corps}`;
 function copierTexte() {
   const texte = document.getElementById("corps-sanction").innerText;
   navigator.clipboard.writeText(texte).then(() => afficherToast("✅ Texte copié !"));
+}
+
+function copierTitre() {
+  const titre = document.getElementById("titre-mp").textContent;
+  navigator.clipboard.writeText(titre).then(() => afficherToast("✅ Titre copié !"));
 }
 
 function afficherToast(msg) {
