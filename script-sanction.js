@@ -85,8 +85,8 @@ const GRADES_OPTIONS = `
 
 function toggleMotifAutre() {
   const val = document.getElementById("motif").value;
-  document.getElementById("bloc_motif_autre").className =
-    val === "autre" ? "champ formulaire-visible" : "champ formulaire-cache";
+  document.getElementById("bloc_motif_autre").style.display =
+    val === "autre" ? "block" : "none";
 }
 
 // ── Ajout / suppression de copies ───────────────────────────────────────────
@@ -126,6 +126,7 @@ function genererSanction() {
   const niveau        = document.getElementById("niveau_sanction").value;
   const motif         = document.getElementById("motif").value;
   const motif_autre_texte = document.getElementById("motif_autre_texte").value.trim();
+  const motif_detail  = document.getElementById("motif_detail").value.trim();
   const date_sanction = document.getElementById("date_sanction").value;
   const date_prec     = document.getElementById("date_precedente").value;
   const nds_titre     = document.getElementById("nds_titre").value.trim();
@@ -237,14 +238,17 @@ ${copiesStr}[/couleur] [/b] [/droite]`;
     ndsBloc = `[quote=${ndsLabel}]${nds_texte}[/quote]\n`;
   }
 
+  // Détail du motif (affiché au-dessus de la note de service)
+  const detailBloc = motif_detail ? `${motif_detail}\n` : "";
+
   // Corps
   const suitePhrase = niveau !== "avert4"
-    ? `Par ailleurs, en cas de nouveau manquement aux NDS en vigueur, la procédure continuera avec [couleur=red]${niveauSuivant}[/couleur], dans un délai de 7 jours.\nNous restons à votre disposition pour échanger et vous conseiller afin d'éviter une prochaine sanction.\n`
+    ? `Par ailleurs, en cas de nouveau manquement aux NDS en vigueur, la procédure continuera avec [couleur=red]${niveauSuivant}[/couleur], dans un délai de 2 mois.\nNous restons à votre disposition pour échanger et vous conseiller afin d'éviter une prochaine sanction.\n`
     : "";
   const corps = `Bonjour,
 Le [b] [i]${dateFormatee}[/i] [/b], vous êtes sanctionné(e) d'un ${niveauNom.toLowerCase()} pour ${motifsTexte[motif]}.
 ${motifsCorps[motif]}
-${ndsBloc}${suitePhrase}Cordialement,`;
+${detailBloc}${ndsBloc}${suitePhrase}Cordialement,`;
 
   // Assemblage BBCode
   const bbcode = `[centre] [h1] [couleur=red] [s]${niveauNom}[/s] [/couleur] [/h1] [/centre]
@@ -306,7 +310,8 @@ function resetSanction() {
   document.getElementById("niveau_sanction").selectedIndex = 0;
   document.getElementById("motif").selectedIndex           = 0;
   document.getElementById("motif_autre_texte").value      = "";
-  document.getElementById("bloc_motif_autre").className   = "champ formulaire-cache";
+  document.getElementById("motif_detail").value           = "";
+  document.getElementById("bloc_motif_autre").style.display = "none";
   document.getElementById("date_sanction").value          = "";
   document.getElementById("date_precedente").value        = "";
   document.getElementById("nds_titre").value              = "";
