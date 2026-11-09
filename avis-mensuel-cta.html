@@ -4,7 +4,7 @@
 
   <a href="index.html" class="btn-retour">← Retour</a>
 <head>
-    <title>FlashMPP - Avis Mensuel CTA</title>
+    <title>FlashMPP - Avis Mensuel CTA/CODIS</title>
 </head>
   <header>
     <h1>⚡ FlashMPP</h1>
@@ -12,7 +12,7 @@
   </header>
 
   <div class="formulaire-visible">
-    <h2>🎧 Avis Mensuel CTA</h2>
+    <h2>🎧 Avis Mensuel CTA/CODIS</h2>
 
     <!-- IDENTITÉ -->
     <div class="section">
@@ -42,17 +42,17 @@
       <div class="champ">
         <label>Poste au CTA</label>
         <select id="poste" onchange="afficherChampPoste()">
+          <option value="operateur">Opérateur</option>
           <option value="chef_centre">Chef de Centre</option>
           <option value="chef_centre_adjoint">Chef de Centre Adjoint</option>
           <option value="chef_salle">Chef de Salle</option>
-          <option value="operateur">Opérateur</option>
         </select>
       </div>
     </div>
 
-    <!-- ACTIVITÉ CTA -->
+    <!-- ACTIVITÉ CTA/CODIS -->
     <div class="section">
-      <h3>📞 Activité CTA</h3>
+      <h3>📞 Activité CTA/CODIS</h3>
       <div class="champ">
         <label>Heures de garde CTA (laisser vide pour ne pas les mentionner)</label>
         <input type="number" id="nb_garde" min="0" placeholder="Ex: 34" />
