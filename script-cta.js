@@ -55,7 +55,7 @@ function construireAvis(d) {
   let activite = "";
   if (d.nbGarde > 0) {
     activite = d.typeGarde === "heures"
-      ? `a effectué ${pl(d.nbGarde, "heure")} de garde`
+      ? `a effectué ${pl(d.nbGarde, "heure")} de garde CTA`
       : `a posé ${pl(d.nbGarde, "garde")} CTA`;
   }
   parties.push(activite
@@ -70,23 +70,27 @@ function construireAvis(d) {
   }
 
   // Statistiques
+  const aDpa    = d.dpa !== null && d.dpa !== undefined && !isNaN(d.dpa);
+  const valeurs = aDpa ? [d.dpa, d.cp, d.humeur] : [d.cp, d.humeur];
+  const tous    = seuil => valeurs.every(v => v >= seuil);
   const statsNote =
-    (d.cp === 100 && d.humeur === 100) ? "excellentes" :
-    (d.cp >= 75 && d.humeur >= 75)     ? "bonnes" :
-    (d.cp >= 50 && d.humeur >= 50)     ? "correctes" : "insuffisantes";
-  const dpaTxt = d.dpa ? ` [${d.dpa}]` : "";
-  parties.push(`Ses statistiques sont ${statsNote}${dpaTxt}, avec ${d.cp} % de CP et ${d.humeur} % en humeur.`);
+    tous(100) ? "excellentes" :
+    tous(90)  ? "très bonnes" :
+    tous(75)  ? "bonnes" :
+    tous(50)  ? "correctes" : "insuffisantes";
+  const dpaTxt = aDpa ? `${formaterTaux(d.dpa)} % de DPA, ` : "";
+  parties.push(`Ses statistiques sont ${statsNote}, avec ${dpaTxt}${d.cp} % de CP et ${d.humeur} % en humeur.`);
 
   // Obligations
   parties.push(d.fma === "ajour"
     ? "FMA à jour."
     : "FMA non à jour, ce point doit être régularisé rapidement.");
 
-  if (d.epi) parties.push(d.epi === "correct"
+  parties.push(d.epi === "correct"
     ? "Les EPI sont complets."
     : "Les EPI sont incomplets ou mal entretenus, ce point doit être amélioré.");
 
-  if (d.planning) parties.push(d.planning === "oui"
+  parties.push(d.planning === "oui"
     ? "Les plannings sont débloqués en temps et en heure."
     : "Les plannings ne sont pas débloqués dans les temps, ce point doit être corrigé.");
 
@@ -99,7 +103,7 @@ function construireAvis(d) {
   }[d.tenuePoste]);
 
   // Communication
-  if (d.communication) parties.push({
+  parties.push({
     excellente: "La communication générale est excellente.",
     tres_bonne: "La communication générale est très bonne.",
     bonne:      "La communication générale est bonne.",
@@ -176,7 +180,7 @@ function genererAvis() {
     presence:      parseFloat(val("presence")),
     appels:        parseInt(val("appels"), 10) || 0,
     erreurs:       parseInt(val("erreurs"), 10) || 0,
-    dpa:           val("dpa").trim(),
+    dpa:           val("dpa") === "" ? null : parseFloat(val("dpa")),
     cp:            parseFloat(val("cp")),
     humeur:        parseFloat(val("humeur")),
     tenuePoste:    val("tenue_poste"),

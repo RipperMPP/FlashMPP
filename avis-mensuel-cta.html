@@ -56,7 +56,7 @@
       <div class="champ">
         <label>Type de relevé</label>
         <select id="type_garde">
-          <option value="heures">Heures de garde</option>
+          <option value="heures">Heures de garde CTA</option>
           <option value="gardes">Gardes CTA posées</option>
         </select>
       </div>
@@ -85,8 +85,8 @@
     <div class="section">
       <h3>📊 Statistiques</h3>
       <div class="champ">
-        <label>DPA (optionnel, affiché entre crochets)</label>
-        <input type="text" id="dpa" placeholder="Ex: 97.10% DPA (134/138)" />
+        <label>DPA (%) (laisser vide pour ne pas le mentionner)</label>
+        <input type="number" id="dpa" min="0" max="100" step="any" placeholder="Ex: 97.10" />
       </div>
       <div class="champ">
         <label>CP — Condition Physique (%)</label>
@@ -125,7 +125,6 @@
       <div class="champ">
         <label>EPI</label>
         <select id="epi">
-          <option value="">Ne pas mentionner</option>
           <option value="correct">Complets et entretenus</option>
           <option value="incorrect">Incomplets ou mal entretenus</option>
         </select>
@@ -133,7 +132,6 @@
       <div class="champ">
         <label>Planning débloqué</label>
         <select id="planning">
-          <option value="">Ne pas mentionner</option>
           <option value="oui">Oui, dans les temps</option>
           <option value="non">Non / En retard</option>
         </select>
@@ -141,7 +139,6 @@
       <div class="champ">
         <label>Communication</label>
         <select id="communication">
-          <option value="">Ne pas mentionner</option>
           <option value="excellente">Excellente</option>
           <option value="tres_bonne">Très bonne</option>
           <option value="bonne">Bonne</option>
@@ -175,7 +172,7 @@
         </select>
       </div>
       <div class="champ">
-        <label>Remarque complémentaire (optionnel, ajoutée telle quelle avant la conclusion)</label>
+        <label>Remarque complémentaire (facultatif, ajoutée telle quelle avant la conclusion)</label>
         <textarea id="remarque" placeholder="Ex: Chef de salle expérimenté, connaissant parfaitement son poste et ses responsabilités."></textarea>
       </div>
     </div>
