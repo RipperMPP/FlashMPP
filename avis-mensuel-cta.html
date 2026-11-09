@@ -1,0 +1,306 @@
+<link rel="stylesheet" href="style.css" />
+
+<div class="container">
+
+  <a href="index.html" class="btn-retour">← Retour</a>
+<head>
+    <title>FlashMPP - Avis Mensuel CTA</title>
+</head>
+  <header>
+    <h1>⚡ FlashMPP</h1>
+    <p>Générateur d'avis - MonPompier.com</p>
+  </header>
+
+  <div class="formulaire-visible">
+    <h2>🎧 Avis Mensuel CTA</h2>
+
+    <!-- IDENTITÉ -->
+    <div class="section">
+      <h3>👤 Identité</h3>
+      <div class="champ">
+        <label>Grade</label>
+        <select id="grade">
+          <option value="Sapeur">Sapeur</option>
+          <option value="Caporal">Caporal</option>
+          <option value="Caporal-Chef">Caporal-Chef</option>
+          <option value="Sergent">Sergent</option>
+          <option value="Sergent-Chef">Sergent-Chef</option>
+          <option value="Adjudant">Adjudant</option>
+          <option value="Adjudant-Chef">Adjudant-Chef</option>
+          <option value="Lieutenant">Lieutenant</option>
+          <option value="Capitaine">Capitaine</option>
+          <option value="Commandant">Commandant</option>
+          <option value="Lieutenant-Colonel">Lieutenant-Colonel</option>
+          <option value="Colonel">Colonel</option>
+          <option value="Contrôleur Général">Contrôleur Général</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Pseudo du joueur</label>
+        <input type="text" id="nom" placeholder="Pseudo" />
+      </div>
+      <div class="champ">
+        <label>Poste au CTA</label>
+        <select id="poste" onchange="afficherChampPoste()">
+          <option value="chef_centre">Chef de Centre</option>
+          <option value="chef_centre_adjoint">Chef de Centre Adjoint</option>
+          <option value="chef_salle">Chef de Salle</option>
+          <option value="operateur">Opérateur</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ACTIVITÉ CTA -->
+    <div class="section">
+      <h3>📞 Activité CTA</h3>
+      <div class="champ">
+        <label>Type de relevé</label>
+        <select id="type_garde">
+          <option value="heures">Heures de garde</option>
+          <option value="gardes">Gardes CTA posées</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Nombre d'heures / de gardes (laisser vide pour ne pas le mentionner)</label>
+        <input type="number" id="nb_garde" min="0" placeholder="Ex: 34" />
+      </div>
+      <div class="champ">
+        <label>Taux de présence (%)</label>
+        <input type="number" id="presence" min="0" max="100" value="100" />
+      </div>
+      <div class="champ">
+        <label>Appels traités (laisser vide pour ne pas le mentionner)</label>
+        <input type="number" id="appels" min="0" placeholder="Ex: 192" oninput="majTaux()" />
+      </div>
+      <div class="champ">
+        <label>Erreurs</label>
+        <input type="number" id="erreurs" min="0" value="0" oninput="majTaux()" />
+      </div>
+      <div class="note-globale">
+        Taux de réussite : <strong id="taux-preview">—</strong>
+      </div>
+    </div>
+
+    <!-- STATISTIQUES -->
+    <div class="section">
+      <h3>📊 Statistiques</h3>
+      <div class="champ">
+        <label>DPA (optionnel, affiché entre crochets)</label>
+        <input type="text" id="dpa" placeholder="Ex: 97.10% DPA (134/138)" />
+      </div>
+      <div class="champ">
+        <label>CP — Condition Physique (%)</label>
+        <input type="number" id="cp" min="0" max="100" value="100" />
+      </div>
+      <div class="champ">
+        <label>Humeur (%)</label>
+        <input type="number" id="humeur" min="0" max="100" value="100" />
+      </div>
+    </div>
+
+    <!-- GESTION DU POSTE -->
+    <div class="section" id="bloc_tenue_poste">
+      <h3>🏛️ Gestion du poste</h3>
+      <div class="champ">
+        <label>Tenue du poste</label>
+        <select id="tenue_poste">
+          <option value="parfait">Parfaitement tenu et en autonomie</option>
+          <option value="bien">Bien tenu</option>
+          <option value="moyen">Tenu de manière passable</option>
+          <option value="insuffisant">Insuffisamment tenu</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- OBLIGATIONS -->
+    <div class="section">
+      <h3>📋 Obligations</h3>
+      <div class="champ">
+        <label>FMA</label>
+        <select id="fma">
+          <option value="ajour">À jour</option>
+          <option value="noajour">Non à jour</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>EPI</label>
+        <select id="epi">
+          <option value="">Ne pas mentionner</option>
+          <option value="correct">Complets et entretenus</option>
+          <option value="incorrect">Incomplets ou mal entretenus</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Planning débloqué</label>
+        <select id="planning">
+          <option value="">Ne pas mentionner</option>
+          <option value="oui">Oui, dans les temps</option>
+          <option value="non">Non / En retard</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Communication</label>
+        <select id="communication">
+          <option value="">Ne pas mentionner</option>
+          <option value="excellente">Excellente</option>
+          <option value="tres_bonne">Très bonne</option>
+          <option value="bonne">Bonne</option>
+          <option value="passable">Passable</option>
+          <option value="mauvaise">Mauvaise</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Rappels / Avertissements</label>
+        <select id="rappels">
+          <option value="aucun">Aucun</option>
+          <option value="rappel_officiel">Rappel Officiel</option>
+          <option value="avert1">Avertissement Niveau 1</option>
+          <option value="avert2">Avertissement Niveau 2</option>
+          <option value="avert3">Avertissement Niveau 3</option>
+          <option value="avert4">Avertissement Niveau 4</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- BILAN -->
+    <div class="section">
+      <h3>⚖️ Bilan</h3>
+      <div class="champ">
+        <label>Ensemble du mois</label>
+        <select id="ensemble">
+          <option value="excellent">Très bon mois</option>
+          <option value="bon">Bon mois</option>
+          <option value="passable">Mois passable</option>
+          <option value="mauvais">Mauvais mois</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Remarque complémentaire (optionnel, ajoutée telle quelle avant la conclusion)</label>
+        <textarea id="remarque" placeholder="Ex: Chef de salle expérimenté, connaissant parfaitement son poste et ses responsabilités."></textarea>
+      </div>
+    </div>
+
+    <!-- SIGNATURE -->
+    <div class="section">
+      <h3>✍️ Signature</h3>
+
+      <div class="champ champ-toggle">
+        <label class="toggle-label">
+          <input type="checkbox" id="opt_entete" />
+          Inclure l'en-tête <code>[Avis CTA Mois Année]</code>
+        </label>
+      </div>
+      <div class="champ champ-toggle">
+        <label class="toggle-label">
+          <input type="checkbox" id="opt_signature" />
+          Inclure la ligne de signature
+        </label>
+      </div>
+      <div class="champ">
+        <label>Ton grade</label>
+        <select id="sig_grade">
+          <option value="Sapeur">Sapeur</option>
+          <option value="Caporal">Caporal</option>
+          <option value="Caporal-Chef">Caporal-Chef</option>
+          <option value="Sergent">Sergent</option>
+          <option value="Sergent-Chef">Sergent-Chef</option>
+          <option value="Adjudant">Adjudant</option>
+          <option value="Adjudant-Chef">Adjudant-Chef</option>
+          <option value="Lieutenant">Lieutenant</option>
+          <option value="Capitaine">Capitaine</option>
+          <option value="Commandant">Commandant</option>
+          <option value="Lieutenant-Colonel">Lieutenant-Colonel</option>
+          <option value="Colonel">Colonel</option>
+          <option value="Contrôleur Général">Contrôleur Général</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Ton pseudo</label>
+        <input type="text" id="sig_pseudo" placeholder="Ton Pseudo" />
+      </div>
+      <div class="champ">
+        <label>Ta fonction</label>
+        <select id="sig_fonction">
+          <optgroup label="--- CTA ---">
+            <option value="Chef de Salle">Chef de Salle</option>
+          </optgroup>
+          <optgroup label="--- Caserne ---">
+            <option value="Responsable Pharmacie">Responsable Pharmacie</option>
+            <option value="Responsable Matériel">Responsable Matériel</option>
+            <option value="Responsable Habillement">Responsable Habillement</option>
+            <option value="Responsable Véhicules">Responsable Véhicules</option>
+            <option value="Chef de Section">Chef de Section</option>
+            <option value="Responsable Formation Caserne">Responsable Formation Caserne</option>
+            <option value="Chef de Centre Adjoint">Chef de Centre Adjoint</option>
+            <option value="Chef de Centre">Chef de Centre</option>
+          </optgroup>
+          <optgroup label="--- Groupement ---">
+            <option value="Responsable Technique Adjoint">Responsable Technique Adjoint</option>
+            <option value="Responsable Technique">Responsable Technique</option>
+            <option value="Responsable RH Adjoint">Responsable RH Adjoint</option>
+            <option value="Responsable des Ressources Humaines">Responsable des Ressources Humaines</option>
+            <option value="Responsable Opérations-Prévisions Adjoint">Responsable Opérations-Prévisions Adjoint</option>
+            <option value="Responsable Opérations-Prévisions">Responsable Opérations-Prévisions</option>
+            <option value="Responsable Formation Adjoint">Responsable Formation Adjoint</option>
+            <option value="Responsable Formation">Responsable Formation</option>
+            <option value="Chef de Groupement Adjoint">Chef de Groupement Adjoint</option>
+            <option value="Chef de Groupement">Chef de Groupement</option>
+          </optgroup>
+          <optgroup label="--- Direction ---">
+            <option value="Directeur Ressources Humaines Adjoint">Directeur Ressources Humaines Adjoint</option>
+            <option value="Directeur Ressources Humaines">Directeur Ressources Humaines</option>
+            <option value="Directeur Départemental Adjoint">Directeur Départemental Adjoint</option>
+            <option value="Directeur Départemental">Directeur Départemental</option>
+            <option value="CASDIS">CASDIS</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Caserne / Groupement</label>
+        <select id="sig_caserne">
+          <optgroup label="--- SDIS 13 — Bouches-du-Rhône ---">
+            <option value="CIS Alpilles-Durance|13">CIS Alpilles-Durance</option>
+            <option value="CIS Chateaurenard|13">CIS Chateaurenard</option>
+            <option value="CIS Eyguières|13">CIS Eyguières</option>
+            <option value="CIS Istres|13">CIS Istres</option>
+            <option value="CIS Lambesc|13">CIS Lambesc</option>
+            <option value="CIS Mallemort|13">CIS Mallemort</option>
+            <option value="CIS Salon-de-Provence|13">CIS Salon-de-Provence</option>
+            <option value="CIS Vallée des Baux|13">CIS Vallée des Baux</option>
+            <option value="Groupement Centre|13">Groupement Centre</option>
+            <option value="Groupement Nord|13">Groupement Nord</option>
+            <option value="Direction 13|13">Direction 13</option>
+            <option value="CTA 13|13">CTA 13</option>
+          </optgroup>
+          <optgroup label="--- SDIS 67 — Bas-Rhin ---">
+            <option value="CIS Bischwiller|67">CIS Bischwiller</option>
+            <option value="CIS Molsheim|67">CIS Molsheim</option>
+            <option value="CIS Petersbach|67">CIS Petersbach</option>
+            <option value="CIS Saverne|67">CIS Saverne</option>
+            <option value="CIS Strasbourg Ouest|67">CIS Strasbourg Ouest</option>
+            <option value="CIS Truchtersheim|67">CIS Truchtersheim</option>
+            <option value="CIS Val de Moder|67">CIS Val de Moder</option>
+            <option value="CIS Wasselonne|67">CIS Wasselonne</option>
+            <option value="Groupement Nord|67">Groupement Nord</option>
+            <option value="Groupement Sud|67">Groupement Sud</option>
+            <option value="Direction 67|67">Direction 67</option>
+            <option value="CTA 67|67">CTA 67</option>
+          </optgroup>
+          <optgroup label="--- État-Major ---">
+            <option value="CASDIS|">CASDIS</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+
+    <button onclick="genererAvis()">📄 Générer l'avis</button>
+    <button type="button" onclick="resetFormulaire()" style="background-color:#30363d; margin-top:10px;">🔄 Réinitialiser</button>
+  </div>
+
+  <div id="resultat" class="formulaire-cache"></div>
+  <p class="signature-auteur">Par Ripper</p>
+</div>
+
+<div id="toast-copie" class="toast"></div>
+
+<script src="script-cta.js?v=1"></script>
