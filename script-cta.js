@@ -70,16 +70,14 @@ function construireAvis(d) {
   }
 
   // Statistiques
-  const aDpa    = d.dpa !== null && d.dpa !== undefined && !isNaN(d.dpa);
-  const valeurs = aDpa ? [d.dpa, d.cp, d.humeur] : [d.cp, d.humeur];
+  const valeurs = [d.dpa, d.cp, d.humeur];
   const tous    = seuil => valeurs.every(v => v >= seuil);
   const statsNote =
     tous(100) ? "excellentes" :
     tous(90)  ? "très bonnes" :
     tous(75)  ? "bonnes" :
     tous(50)  ? "correctes" : "insuffisantes";
-  const dpaTxt = aDpa ? `${formaterTaux(d.dpa)} % de DPA, ` : "";
-  parties.push(`Ses statistiques sont ${statsNote}, avec ${dpaTxt}${d.cp} % de CP et ${d.humeur} % en humeur.`);
+  parties.push(`Ses statistiques sont ${statsNote}, avec ${formaterTaux(d.dpa)} % de DPA, ${d.cp} % de CP et ${d.humeur} % en humeur.`);
 
   // Obligations
   parties.push(d.fma === "ajour"
@@ -180,7 +178,7 @@ function genererAvis() {
     presence:      parseFloat(val("presence")),
     appels:        parseInt(val("appels"), 10) || 0,
     erreurs:       parseInt(val("erreurs"), 10) || 0,
-    dpa:           val("dpa") === "" ? null : parseFloat(val("dpa")),
+    dpa:           parseFloat(val("dpa")),
     cp:            parseFloat(val("cp")),
     humeur:        parseFloat(val("humeur")),
     tenuePoste:    val("tenue_poste"),
@@ -193,8 +191,8 @@ function genererAvis() {
     remarque:      val("remarque").trim(),
   };
 
-  if (!d.nom || isNaN(d.presence) || isNaN(d.cp) || isNaN(d.humeur)) {
-    afficherToast("⚠️ Pseudo, présence, CP et humeur sont requis.");
+  if (!d.nom || isNaN(d.presence) || isNaN(d.dpa) || isNaN(d.cp) || isNaN(d.humeur)) {
+    afficherToast("⚠️ Pseudo, présence, DPA, CP et humeur sont requis.");
     return;
   }
   if (d.appels > 0 && d.erreurs > d.appels) {
@@ -263,7 +261,7 @@ function resetFormulaire() {
   document.getElementById("presence").value  = 100;
   document.getElementById("appels").value    = "";
   document.getElementById("erreurs").value   = 0;
-  document.getElementById("dpa").value       = "";
+  document.getElementById("dpa").value       = 100;
   document.getElementById("cp").value        = 100;
   document.getElementById("humeur").value    = 100;
   document.getElementById("remarque").value  = "";
