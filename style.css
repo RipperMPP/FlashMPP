@@ -139,6 +139,7 @@ button:hover {
 
 .modules {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
@@ -147,7 +148,7 @@ button:hover {
   border: 1px solid #30363d;
   border-radius: 12px;
   padding: 30px;
-  flex: 1;
+  flex: 1 1 calc(33.333% - 14px);
   text-align: center;
 }
 
@@ -376,4 +377,4 @@ button:hover {
   font-family: monospace;
   font-size: 13px;
   line-height: 1.7;
-} 
+}
