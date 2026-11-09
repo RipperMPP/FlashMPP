@@ -52,12 +52,9 @@ function construireAvis(d) {
   const parties = [];
 
   // Garde + présence
-  let activite = "";
-  if (d.nbGarde > 0) {
-    activite = d.typeGarde === "heures"
-      ? `a effectué ${pl(d.nbGarde, "heure")} de garde CTA`
-      : `a posé ${pl(d.nbGarde, "garde")} CTA`;
-  }
+  const activite = d.nbGarde > 0
+    ? `a effectué ${pl(d.nbGarde, "heure")} de garde CTA`
+    : "";
   parties.push(activite
     ? `${intro} ${activite}, avec une présence assurée à ${d.presence} %.`
     : `${intro} affiche une présence de ${d.presence} %.`);
@@ -173,7 +170,6 @@ function genererAvis() {
     grade:         val("grade"),
     nom:           val("nom").trim(),
     poste:         val("poste"),
-    typeGarde:     val("type_garde"),
     nbGarde:       parseFloat(val("nb_garde")) || 0,
     presence:      parseFloat(val("presence")),
     appels:        parseInt(val("appels"), 10) || 0,
@@ -253,7 +249,7 @@ function afficherToast(msg) {
 // ── Reset ────────────────────────────────────────────────────────────────────
 
 function resetFormulaire() {
-  const idx0 = ["grade", "poste", "type_garde", "tenue_poste", "fma", "epi", "planning", "communication", "rappels", "ensemble"];
+  const idx0 = ["grade", "poste", "tenue_poste", "fma", "epi", "planning", "communication", "rappels", "ensemble"];
   idx0.forEach(id => { document.getElementById(id).selectedIndex = 0; });
 
   document.getElementById("nom").value       = "";
